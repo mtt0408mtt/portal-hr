@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN" ng-app="pm">
+    <head>
+        <title>
+            门户
+        </title>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+                <meta content="Blue Moon - Responsive Admin Dashboard" name="description"/>
+                <meta content="Notifications, Admin, Dashboard, Bootstrap3, Sass, transform, CSS3, HTML5, Web design, UI Design, Responsive Dashboard, Responsive Admin, Admin Theme, Best Admin UI, Bootstrap Theme, Wrapbootstrap, Bootstrap, bootstrap.gallery" name="keywords"/>
+                <meta content="Bootstrap Gallery" name="author"/>
+                <link href="img/favicon.ico" rel="shortcut icon"/>
+                <link href="css/bootstrap.min.css" rel="stylesheet"/>
+                <link href="css/new.css" rel="stylesheet"/>
+                <link href="css/charts-graphs.css" rel="stylesheet"/>
+                <!-- Datepicker CSS -->
+                <link href="css/datepicker.css" rel="stylesheet" type="text/css"/>
+                <link href="fonts/css/fontawesome-all.min.css" rel="stylesheet"/>
+                <!-- HTML5 shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+                <!--[if lt IE 9]>
+                <script src="js/html5shiv.js"></script>
+                <script src="js/respond.min.js"></script>
+                <![endif]-->
+				<link href="css/fSelect.css" rel="stylesheet" type="text/css">
+               <!--   <link href="css/reset_portal.css" rel="stylesheet" type="text/css"/>-->
+                <link href='css/angular-ui-switch.min.css' rel='stylesheet'>
+       <link href="css/act/style.css" rel="stylesheet">
+      <link href="css/act/style-retina.css" rel="stylesheet">
+      <link href="css/act/style-idm.css" rel="stylesheet">
+            </meta>
+        </meta>
+    </head>
+    <body ng-controller="MainController" ng-cloak>
+
+        <!-- Header Start -->
+        <header>
+            <a class="logo" href="report.html">
+                <img alt="Logo" src="img/logo.png"/>
+            </a>
+            <div class="pull-right">
+                <ul class="clearfix" id="mini-nav">
+                    <li class="list-box user-profile">
+                    <div class="dropdown" >
+                        <a class="dropdown-toggle user-avtar" data-toggle="dropdown"  id="drop7" role="button">
+                            <img alt="Bluemoon User" src="img/user5.png">
+                            </img>
+
+                        </a>
+                        <div ng-bind="adminInPage.id_"></div>
+                         <ul class="dropdown-menu server-activity">
+                            <li>
+                                <div class="demo-btn-group clearfix">
+                                    <button class="btn"  ng-click="quit()" style="background: #48bfdc;color: #fff;margin-left: 39%;">
+                                        Logout
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <!-- Header End -->
+        <!-- Main Container start -->
+        <div class="dashboard-container" >
+
+                <!-- Top Nav Start -->
+                 <div id="cssmenu" >
+                    <ul id="url_tab">
+                        <li auto-focus="" class="active col-lg-4" id="url_tab_portal_index">
+                            <a href="#/user">用户</a>
+                        </li>
+                        <li auto-focus="" class="col-lg-4" id="url_tab_lis_opt">
+                            <a href="#/group">组</a>
+                        </li>
+                        <li auto-focus="" class="col-lg-4" id="url_tab_lis_opt">
+                            <a href="#/profile">个人</a>
+
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Top Nav End -->
+                <div ng-view="" ng-cloak ng-style="{height: window.height + 'px'}">
+                </div>
+
+
+        </div>
+        <!-- Main Container end -->
+        <!-- Main Container end -->
+        <script src="js/jquery.min.js">
+        </script>
+        <script src="js/bootstrap.min.js">
+        </script>
+        <script src="js/echarts.js">
+        </script>
+        <script charset="UTF-8" src="bower_components/angular/angular.js">
+        </script>
+        <script charset="UTF-8" src="bower_components/angular-translate_2.4.2/angular-translate.min.js">
+        </script>  
+      <script charset="UTF-8" src="bower_components/angular-animate_1.4.6/angular-animate.min.js">
+        </script>        
+        
+        <script charset="UTF-8" src="bower_components/angular-strap_2.1.6/angular-strap.min.js">
+        </script>  
+             <script charset="UTF-8" src="bower_components/angular-strap_2.1.6/angular-strap.tpl.min.js">
+        </script>     
+        <script charset="UTF-8" src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js">
+        </script>          
+         
+         
+        
+        
+        <script src="components/ui-bootstrap-tpls.min.js">
+        </script>
+        <script src="bower_components/angular-route/angular-route.js">
+        </script>
+        <script src="bower_components/angular-cookie/angular-cookies.min.js">
+        </script>
+        <script src="components/ng-file-upload.min.js">
+        </script>
+        <script src="components/ng-file-upload-shim.min.js">
+        </script>
+        <script src="components/angular-ui-switch.min.js">
+        </script>
+        <script src="components/angular-locale_zh-cn.js">
+        </script>
+        <script charset="UTF-8" src="components/idm/app.js">
+        </script>
+        <script charset="UTF-8" src="components/act/common/directives.js"></script>
+        <script charset="UTF-8" src="components/http.js">
+        </script>
+        <script charset="UTF-8" src="components/auto-focus.js">
+        </script>
+        <script src="layer/layer.js" type="text/javascript">
+        </script>
+        <script src="js/common.js" type="text/javascript">
+        </script>
+
+        <script charset="UTF-8" src="view/idm/user/controller.js">
+        </script>
+
+    </body>
+</html>

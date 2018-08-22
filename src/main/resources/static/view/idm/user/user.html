@@ -1,0 +1,94 @@
+
+<div class="main-list" id="main-list">
+    <div class="list-subheader clearfix" style="margin-top: 0px">
+        <div class="btn-group pull-right">
+            <button class="btn" translate="IDM.USER-MGMT.CREATE-USER" ng-click="addUser()">&nbsp;</button>
+        </div>
+    </div>
+    <div class="list-wrapper" auto-height>
+
+        <div style="padding: 0 15px 15px 15px;">
+
+            <h4>{{'IDM.USER-MGMT.NAME-SEARCH' | translate}}</h4>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-search"></i>
+                </span>
+                <input type="text" ng-model="model.pendingFilterText" class="form-control" ng-change="refreshDelayed()">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="main-content-wrapper">
+
+    <div class="main-content" ng-show="!model.loadingTenant">
+
+        <div class="header">
+
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" ng-disabled="model.selectedUserCount == 0">{{'IDM.USER-MGMT.ACTIONS' | translate}}</button>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-disabled="model.selectedUserCount == 0">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-click="editUserDetails()" ng-if="model.selectedUserCount == 1"><a href="">{{'IDM.USER-MGMT.EDIT-USER' | translate}}</a></li>
+                        <li ng-click="editUserPassword()"><a href="">{{'IDM.USER-MGMT.CHANGE-PASSWORD' | translate}}</a></li>
+                        <li ng-click="deleteUsers()"><a href="">{{'IDM.USER-MGMT.DELETE-USERS' | translate}}</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div>
+                <h2>{{'IDM.USER-MGMT.TITLE' | translate}}</h2>
+            </div>
+
+        </div>
+
+        <div class="content" auto-height offset="6">
+            <div style="margin-top: 10px;">
+                <div class="dropdown-subtle pull-right">
+                    <div class="btn-group btn-group-sm" style="margin-bottom: 5px;">
+                        <button type="button" class="btn btn-default dropdown-toggle"
+                                data-toggle="dropdown">{{'IDM.USER-MGMT.ORDER-BY' | translate}} {{model.activeSort.name}} <i class="caret"></i></button>
+                        <ul class="dropdown-menu pull-right">
+                            <li ng-repeat="sort in model.sorts">
+                                <a ng-click="activateSort(sort)">{{sort.name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="message clearfix">
+                    <div ng-if="!model.loading">
+						<p>总共{{page.totalCount}}条记录，第{{page.currentPage}}/{{page.totalPages}}页
+										<a 
+											ng-disabled="page.currentPage<=1"
+											ng-click="go(page.currentPage - 1)">上一页</a>
+										<a 
+											ng-disabled="page.currentPage >= page.totalPages"
+											ng-click="go(page.currentPage + 1)">下一页</a></p>
+                    </div>
+
+                    <table width="100%" class="users" ng-if="model.users && model.users.length > 0">
+                        <tr>
+                            <th width="4%"></th>
+                            <th width="20%">{{'IDM.USER-MGMT.ID' | translate}}</th>
+                            <th width="30%">{{'IDM.USER-MGMT.EMAIL' | translate}}</th>
+                            <th width="30%">{{'IDM.USER-MGMT.NAME' | translate}}</th>
+                        </tr>
+                        <tr ng-repeat="user in model.users" ng-click="toggleUserSelection(user)" ng-class="{'selected': model.selectedUsers[user.id_]}">
+                            <td class="control"><input type="checkbox" ng-checked="model.selectedUsers[user.id_]"></td>
+                            <td>{{user.id_}}</td>
+                            <td>{{user.email_}}</td>
+                            <td>{{user.fullName_}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

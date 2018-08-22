@@ -1,0 +1,192 @@
+{
+   "IDM": {
+      "GENERAL" : {
+        "MAIN-TITLE": "Activiti - Identity Management",
+        "NAVIGATION": {
+            "PROFILE": "Personal",
+            "USER-MGMT": "Users",
+            "GROUP-MGMT": "Groups"
+        },
+        "ACTION": {
+          "CANCEL": "取消",
+          "CREATE": "创建",
+          "SAVE": "保存",
+          "CLOSE": "关闭",
+          "LOGOUT": "退出",
+          "ABOUT": "关于"
+        },
+        "ERROR": {
+            "GENERIC": "Sorry, an error occured...",
+            "UNKNOWN": "Sorry, an error occured while performing the requested operation.",
+            "BAD_REQUEST": "An error occured while performing the requested operation",
+            "NOT_FOUND": "The resource you are trying to access does not exist",
+            "UNAUTHORIZED": "You should sign in in order to perform the requested operation.",
+            "FORBIDDEN": "You are not allowed to perform the requested operation",
+            "INTERNAL_SERVER_ERROR": "Sorry, an unexpected error occured while performing the requested operation."
+        }
+      },
+      "USER-MGMT": {
+        "TITLE": "匹配用户列表",
+         "CREATE-USER": "创建用户",
+         "NAME-SEARCH": "按名字搜索",
+         "COMPANY": "Company",
+         "STATUS": "Status",
+         "ACCOUNT": "Account type",
+         "ACTIONS": "选择操作",
+         "CHANGE-STATUS": "Change status",
+         "CHANGE-ACCOUNT-TYPE": "Change account type",
+         "CHANGE-PASSWORD": "更改密码",
+         "EDIT-USER": "改变明细",
+         "DELETE-USERS": "删除",
+         "TOTAL-USERS": "合计",
+         "INACTIVE-USERS": "inactive",
+         "ENTERPRISE-USERS": "enterprise",
+         "ACTIVE-USERS": "有效的用户",
+         "DELETED-USERS": "删除",
+         "ORDER-BY": "排序",
+         "SHOW-NEXT": "下一个",
+         "SHOW-PREVIOUS": "上一个",
+         "NO-MATCHING-USERS": "没有找到匹配的用户",
+         "MATCHING-USERS": "Found {{total | number}} matching user(s), showing {{start + 1}} to {{start + size}}",
+         "ID": "编号",
+         "EMAIL": "邮箱",
+         "NAME": "姓名",
+         "CREATED": "创建",
+         "TYPE": "类型",
+         "EXTERNAL-ID": "External id",
+         "LAST-SYNC-TIME": "上次更新时间",
+         "FILTERS": {
+             "STATUS-ANY": "Any status",
+             "STATUS-ACTIVE": "Active",
+             "STATUS-INACTIVE": "Inactive",
+             "STATUS-PENDING": "Pending",
+             "STATUS-DELETED": "Deleted",
+             "TYPE-ANY": "Any type",
+             "SORT-DATE-NEWEST": "Date created, newest",
+             "SORT-DATE-OLDEST": "Date created, oldest",
+             "SORT-EMAIL-A": "Email, A-Z",
+             "SORT-EMAIL-Z": "Email, Z-A",
+             "SORT-ID-A": "User id, A-Z",
+             "SORT-ID-Z": "User id, Z-A"
+         },
+         "POPUP": {
+             "CREATE-TITLE": "创建用户",
+             "EDIT-TITLE": "添加用户明细",
+             "CREATE-ID": "编号",
+             "CREATE-EMAIL": "邮箱",
+             "CREATE-INVALID-EMAIL": "无效",
+             "CREATE-PASSWORD": "密码",
+             "CREATE-FIRSTNAME": "姓",
+             "CREATE-LASTNAME": "名",
+             "CREATE-TENANT": "Tenant",
+             "CREATE-COMPANY": "公司",
+             "CREATE-STATUS": "状态",
+             "CREATE-TYPE": "Type",
+             "BULK-UPDATE-TITLE": "Bulk update users",
+             "BULK-UPDATE-NEW-STATUS": "New status:",
+             "BULK-UPDATE-NEW-TYPE": "New account type:",
+             "BULK-UPDATE-EMAIL-NOTIFICATIONS": "Send email notifications for status change",
+             "BULK-UPDATE-STATUS-USERS": "You are about to update the status for these {{length}} user(s):",
+             "BULK-UPDATE-TYPE-USERS": "You are about to update the account type for these {{length}} user(s):",
+             "BULK-UPDATE-CANCEL": "Cancel and close",
+             "BULK-UPDATE-CONFIRM": "Update users",
+             "BULK-UPDATE-PASSWORD-TITLE": "Change password",
+             "BULK-UPDATE-PASSWORD": "Password",
+             "BULK-UPDATE-PASSWORD-REPEAT": "Repeat password",
+             "BULK-UPDATE-PASSWORD-CONFIRM": "Change"
+         }
+      },
+      "FUNCTIONAL-GROUP-MGMT": {
+        "CREATE": "Create group",
+        "NO-GROUPS": "No groups found",
+        "NO-SELECTION": "Select a group from the list on the left",
+        "SYNC-DETAILS": "Synchronization details",
+        "EXTERNAL-ID": "External id:",
+        "LAST-SYNC-TIME": "Last update:",
+        "MEMBERS": "Group members",
+        "SUBGROUPS": "Subgroups",
+        "NO-MEMBERS": "No users found",
+        "ADD-USER": "+ add user",
+        "ADD-SUBGROUP": "+ add subgroup",
+        "NO-SUBGROUPS": "No subgroups found",
+        "USER-ADDED": "Users have been added to group",
+        "INACTIVE": "deactivated",
+        "INACTIVE-DESCRIPTION": "This group has been deactivated. Users will still be able complete currently assigned tasks to this group, but new process definitions cannot use this group anymore.",
+        "ADD-POPOVER-TITLE": "Select user",
+            "POPUP": {
+                "CREATE-TITLE": "Create group",
+                "CREATE-ID": "Group id",
+                "CREATE-NAME": "Name",
+                "DELETE-TITLE": "Delete group",
+                "DELETE-DESCRIPTION": "Are you sure you want to delete this group?",
+                "DELETE-CONFIRM": "Confirm",
+                "DEACTIVATE-TITLE": "Deactivate group",
+                "DEACTIVATE-DESCRIPTION": "Are you sure you want to delete this group? This will delete all sub groups too. Note that a group will first be deactivated, such that tasks of processes can be properly finished. Clicking the removal button a second time will delete the group completely.",
+                "DELETE-MEMBER-TITLE": "Delete group member",
+                "DELETE-MEMBER-DESCRIPTION": "Are you sure you want to delete this user from the group?",
+                "DELETE-CONFIRM": "Confirm",
+                "ADD-MEMBER-TITLE": "Add user",
+                "ADD-MEMBER-NO-USERS": "No users found",
+                "ADD-MEMBER-CONFIRM": "Add ({{selectedUsers.length}})",
+                "ACTIVATE-TITLE": "Activate group",
+                "ACTIVATE-DESCRIPTION": "Activate this group again? This means that this group would again be eligble for task assignment. Note that subgroups of a group are not activated by default.",
+                "ACTIVATE-CONFIRM": "Activate",
+                "EDIT-TITLE": "Edit group"
+            }
+        },
+      "PROFILE-MGMT": {
+         "CREATED": "Registered since",
+         "CHANGE-PASSWORD": "Change password",
+         "DETAILS": "Details",
+         "DETAILS-DESCRIPTION": "Click on any of the fields below to change them",
+         "FIRST-NAME": "First name",
+         "NOTHING-SET": "Nothing set",
+         "LAST-NAME": "Last name",
+         "EMAIL": "Email",
+         "COMPANY": "Company",
+         "GROUPS": "Your groups",
+         "POPUP": {
+            "UPLOAD-PICTURE-TITLE": "Change picture",
+            "UPLOAD-PICTURE-DESCRIPTION": "Please select an image from your computer or drop it in the zone below.",
+            "UPLOAD-PICTURE-CANCEL-UPLOAD": "Cancel upload",
+            "UPLOAD-PICTURE-DROPZONE": "Drop logo image file here",
+            "UPLOAD-PICTURE-NO-DROP": "Drop is not supported by your browser",
+            "UPLOAD-PICTURE-ERROR": "Error",
+            "CHANGE-PASSWORD-TITLE": "Change password",
+            "CHANGE-PASSWORD-ORIGINAL": "Original password",
+            "CHANGE-PASSWORD-NEW-PASSWORD": "New password",
+            "CHANGE-PASSWORD-NEW-PASSWORD2": "Repeat new password",
+            "CHANGE-PASSWORD-CONFIRM": "Confirm",
+            "CHANGE-PASSWORD-NOT-MATCHING": "Passwords don't match",
+            "CHANGE-PASSWORD-INVALID": "Invalid password"
+         }
+      },
+      "USERS": {
+        "TITLE": "User administration",
+        "ACTION": {
+          "CREATE": "Create user"
+        }
+      }
+    },
+    "GENERAL": {
+        "ACTION": {
+            "CLOSE": "Close"
+        },
+        "MESSAGE": {
+            "SELECT-PEOPLE-HELP": "Use &uparrow; and &downarrow; to select and press enter to confirm",
+            "SELECT-GROUP-HELP": "Use &uparrow; and &downarrow; to select and press Enter to confirm",
+            "SELECT-GROUP-SEARCH-PLACEHOLDER": "Search group",
+            "SELECT-GROUP-NO-MATCHING-RESULTS": "Use the search box above to find groups."
+        },
+        "TITLE": {
+            "MATCHING-PEOPLE": "Matching people",
+            "SELECT-GROUP": "Select group",
+            "MATCHING-GROUPS": "Matching groups"
+        }
+    },
+    "INVOLVE-PEOPLE": {
+        "ACTION-SELECT": "Select",
+        "SEARCH-PLACEHOLDER": "Search by name",
+        "NO-MATCHING-RESULTS": "Use the search box above to find users"
+    }
+}

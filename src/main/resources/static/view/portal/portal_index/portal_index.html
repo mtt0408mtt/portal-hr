@@ -1,0 +1,96 @@
+        <!-- Dashboard Wrapper Start -->
+        <div class="dashboard-wrapper-lg">
+          
+          <!-- Row starts -->
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6">
+              <div class="mini-widget">
+                <div class="mini-widget-heading clearfix">
+                  <div class="pull-left">Visitors</div>
+                  <div class="pull-right"><i class="fa fa-angle-up"></i> 12.2<sup>%</sup></div>
+                </div>
+                <div class="mini-widget-body clearfix">
+                  <div class="pull-left">
+                    <i class="fa fa-globe"></i>
+                  </div>
+                  <div class="pull-right number">8757</div>
+                </div>
+<!--                 <div class="mini-widget-footer center-align-text">
+                  <span>Better than last week</span>
+                </div> -->
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+              <div class="mini-widget">
+                <div class="mini-widget-heading clearfix">
+                  <div class="pull-left">Shares</div>
+                  <div class="pull-right"><i class="fa fa-angle-up"></i> 18.3<sup>%</sup></div>
+                </div>
+                <div class="mini-widget-body clearfix">
+                  <div class="pull-left">
+                    <i class="fa fa-twitter"></i>
+                  </div>
+                  <div class="pull-right number">3780</div>
+                </div>
+<!--                 <div class="mini-widget-footer center-align-text">
+                  <span>Better than last week</span>
+                </div> -->
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+              <div class="mini-widget">
+                <div class="mini-widget-heading clearfix">
+                  <div class="pull-left">Downloads</div>
+                  <div class="pull-right"><i class="fa fa-angle-down"></i> 21.9<sup>%</sup></div>
+                </div>
+                <div class="mini-widget-body clearfix">
+                  <div class="pull-left">
+                    <i class="fa fa-upload"></i>
+                  </div>
+                  <div class="pull-right number">12658</div>
+                </div>
+<!--                 <div class="mini-widget-footer center-align-text">
+                  <span>Better than last week</span>
+                </div> -->
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+              <div class="mini-widget mini-widget-grey">
+                <div class="mini-widget-heading clearfix">
+                  <div class="pull-left">Signups</div>
+                  <div class="pull-right"><i class="fa fa-angle-up"></i> 67.1<sup>%</sup></div>
+                </div>
+                <div class="mini-widget-body clearfix">
+                  <div class="pull-left">
+                    <i class="fa fa-coffee"></i>
+                  </div>
+                  <div class="pull-right number">1135</div>
+                </div>
+<!--                 <div class="mini-widget-footer center-align-text">
+                  <span>Better than last week</span>
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <!-- Row ends -->
+
+          <!-- Row Start -->
+          <div class="row" >
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" ng-repeat="data in sub_datas" >
+              <div class="widget">
+                <div class="widget-header">
+                  <div class="title">
+                   <a href="{{data.subHome}}" target="_blank" ng-bind="data.subName"></a> 
+                  </div>
+                </div>
+                <div class="widget-body">
+                  <div id="area-chart" class="chart-height-md"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Row End -->
+          
+        
+        
+     

@@ -1,0 +1,216 @@
+.itemClick {
+    display: inline-block;
+    border: 1px solid #3ebaa9;
+    padding: 5px 20px;
+    border-radius: 20px;
+    margin: 10px 10px;
+    cursor: pointer;
+}
+.itemClick:hover {
+    background: #add7cd;
+}
+.itemIcon {
+    color: #3ebaa9;
+    margin-right: 3px;
+}
+input[type='checkbox']{
+    width: 20px;
+    height: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid #4dbcb4 !important;
+    border-radius: 2px;
+    outline: none;
+}
+input[type=checkbox]:checked {
+    background: url(./images/checkbox.png) center no-repeat;
+    background-size: 18px;
+    outline: none;
+}
+input[type="radio"] + label::before {
+    content: "\a0"; /*不换行空格*/
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 18px;
+    width: 1em;
+    height: 1em;
+    margin-right: .4em;
+    border-radius: 50%;
+    border: 1px solid #3ebaa9;
+    text-indent: .15em;
+    line-height: 1; 
+}
+input[type="radio"]:checked + label::before {
+    background-color: #3ebaa9;
+    background-clip: content-box;
+    padding: .2em;
+}
+input[type="radio"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+}
+.dian1,.dian1_1, .dian1_2 {
+    top: 0px;
+    left: 0px;
+    margin-right: 20px;
+    display: inline-block;
+    width: 6px;
+    border-radius: 10px;
+    background: #3ebaa9;
+    height: 6px;
+    position: relative;
+    top: -1px;
+    left: -4px;
+    margin: 0 auto;
+}
+.dian1_1,.dian1_2 {
+    width: 10px;
+    height: 10px;
+}
+.dian1_3 {
+    width: 18px;
+    height: 18px;
+    padding: 3px;
+    margin-right: 3px;
+    top: -1px;
+    color: #fff;
+}
+.form-control {
+    border: 1px solid #3ebaa9;
+    height: 25px;
+    padding: 0px;
+    position: relative;
+    display: inline;
+}
+.button_dian {
+    width: 100px;
+    margin: 0 auto;
+    margin-top: 10px;
+    background: #48bfdc;
+    text-align: center;
+    color: #fff;
+    height: 31px;
+    line-height: 31px;
+    border-radius: 30px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.itemClick2{
+    margin:6px;
+    padding: 4px 7px;
+}
+
+.custom-search .search-query {
+    margin: 0;
+    padding: 6px 10px;
+    color: #fff; 
+    font-style: italic;
+     background: #9cd4ef; 
+    border: 0px solid #3ebaa9;
+    width: 210px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    line-height: 20px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+}
+.custom-search .search-query:focus {
+    outline: none;
+    border: 0;
+    width: 260px;
+    border: 0px solid #3ebaa9;
+    background: #9cd4ef;
+}
+.custom-search i {
+    padding: 21px 0 0 15px;
+    cursor: pointer;
+    position: relative;
+    right: 40px;
+    color: #c6e0f1;
+}
+.custom-search {
+    position: absolute;
+    float: none;
+    padding: 0;
+    margin: 0 20px 0 0;
+    right: -32px;
+    top: -7px; 
+}
+.chooseTitle {
+    border: 1px solid #3ebaa9;
+    color: #3ebaa9;
+    padding: 5px;
+}
+.chooseHover{
+    background: #3ebaa9;
+    color: #fff;
+}
+.trHover{
+    background: #f7e4d9;
+}
+
+
+/*===========node_tree======start=======*/
+#nodeTreeSearch .form-group,.formDiv .form-group{
+    margin-right: -15px;
+    margin-left: 15px;
+}
+#nodeTreeSearch .control-label,.formDiv .control-label{
+    text-align: left; 
+}
+/*===========node_tree======end=======*/
+
+/*===========diagose_glycosuria======start=======*/
+.treeTitle{
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background: #48bfdc;
+    color: #fff;
+}
+.list-group-item:first-child {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+/*===========diagose_glycosuria======end=======*/
+
+
+/*===========sjhc======start=======*/
+#cssmenu ul ul{
+    width: 100%;
+}
+#cssmenu ul ul li {
+    background: #4abcb3 !important;
+    border:0px;
+    line-height: 35px;
+    color: #fff;
+}
+#cssmenu ul ul li:hover {
+    background: #94d4cf !important;
+}
+#cssmenu ul ul li a {
+    padding: 11px 15px;
+    width: 100%; 
+    font-size: 12px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 400;
+    text-align: center;
+}
+/*===========sjhc======end=======*/
+
+.pageSizeBox {
+    width: 36px;
+    height: 18px;
+    display: inline-block;
+}

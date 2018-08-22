@@ -1,0 +1,763 @@
+<div class="dashboard-wrapper">
+	<div class="widget">
+		<div class="widget-header">
+			<div class="title">机构维护</div>
+		</div>
+		<div class="widget-body">
+			<div class="example_alt_pagination" id="dt_example">
+				<div class="panel panel-transparent">
+					<!-- <div class="panel-title">机构维护</div> -->
+					<div class="panel-body">
+						<div role="tabpanel">
+							<!-- Nav tabs -->
+							<ul class=" nav nav-tabs" role="tablist">
+								<li class="active" role="presentation"><a
+									aria-controls="tab_agency_list" aria-expanded="true"
+									class="mytab_agency active" data-toggle="tab" href=""
+									role="tab"> 查询/更新 </a></li>
+								<li class="" role="presentation"><a
+									aria-controls="tab_agency_add" aria-expanded="false"
+									class="mytab_agency" data-toggle="tab" href="" role="tab">
+										添加 </a></li>
+								<!--  <li class="" role="presentation"><a
+									aria-controls="tab_agency_impower" aria-expanded="false"
+									class="mytab_agency" data-toggle="tab" href="" role="tab">
+										授权分配 </a></li>-->
+							</ul>
+							<!-- Tab panes -->
+							<div class="tab-content">
+								<div class="tab-pane active" id="tab_agency_list"
+									role="tabpanel">
+									<table
+										class="table table-condensed table-striped table-hover  dataTable">
+										<thead>
+											<tr role="row">
+												<td colspan="4"><input placeholder="过滤机构信息"
+													class="search-query " name="query" type="text"
+													ng-model="search.search_agency_filter"
+													ng-keyup="myAgencyKeyup($event)"></td>
+											</tr>
+											<tr class="info" role="row">
+												<th ng-click="order_agency('name')">机构名</th>
+												<th ng-click="order_agency('groupName')">所属集团</th>
+												<th ng-click="order_agency('code')">编号</th>
+												<th ng-click="order_agency('address')">地址</th>
+												<th ng-click="order_agency('postCode')">邮编</th>
+												<th ng-click="order_agency('contactName')">联系人</th>
+												<th ng-click="order_agency('contactPhone')">联系人电话</th>
+												<th ng-click="order_agency('type')">机构类型</th>
+												<!--  <th ng-click="order_agency('status')">状态status</th>-->
+												<th></th>
+											</tr>
+										</thead>
+										<tbody
+											ng-repeat="data in agency_datas  | orderBy:title_agency:ndesc_agency"">
+											<tr>
+												<td ng-bind="data.name"></td>
+												<td ng-bind="data.groupName"></td>
+												<td ng-bind="data.code"></td>
+												<td ng-bind="data.address"></td>
+												<td ng-bind="data.postCode"></td>
+												<td ng-bind="data.contactName"></td>
+												<td ng-bind="data.contactPhone"></td>
+												<td ng-bind="data.type"></td>
+												<!--  <td ng-bind="data.status"></td>-->
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+									<div style="text-align: center;">
+										<p>总共{{page_agency.totalCount}}条记录，第{{page_agency.currentPage}}/{{page_agency.totalPages}}页</p>
+										<button class="btn btn-primary"
+											ng-disabled="page_agency.currentPage<=1"
+											ng-click="go_agency(page_agency.currentPage - 1)">上一页</button>
+										<button class="btn btn-primary"
+											ng-disabled="page_agency.currentPage >= page_agency.totalPages"
+											ng-click="go_agency(page_agency.currentPage + 1)">下一页</button>
+									</div>
+
+								</div>
+								<div class="tab-pane" id="tab_agency_add" role="tabpanel">
+									<form class="form-horizontal" name="agency_form"
+										ng-submit="save_agency()">
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 机构名
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="agency_name" type="text"
+													ng-required="true" ng-maxLength="255"
+													ng-model="agency.name" />
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_name.$dirty && agency_form.agency_name.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_name.$dirty && agency_form.agency_name.$error.required">
+													必填</div>
+											</div>
+										</div>
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 编号
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="agency_code" type="text"
+													ng-required="true" ng-maxLength="255"
+													ng-model="agency.code" />
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_code.$dirty && agency_form.agency_code.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_code.$dirty && agency_form.agency_code.$error.required">
+													必填</div>
+											</div>
+										</div>
+
+
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 所属集团
+											</div>
+											<div class="col-xs-8">
+												<select name="agency_group" class="form-control"
+													ng-model="agency.group" ng-required="true" >
+													  <option ng-repeat="a in dict_group"
+														value="{{a.id}},{{a.name}}">{{a.name}}</option>
+
+												</select>
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_group.$dirty && agency_form.agency_group.$error.required">
+													必填</div>
+											</div>
+										</div>
+
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 机构类型
+											</div>
+											<div class="col-xs-8">
+												<select name="agency_type" class="form-control"
+													ng-model="agency.type" ng-required="true" >
+													<option ng-repeat="a in dict_type_agency" value="{{a.id}}">{{a.name}}</option>
+
+												</select>
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_type.$dirty && agency_form.agency_type.$error.required">
+													必填</div>
+											</div>
+										</div>
+
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 描述
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="agency_desc" type="text"
+													ng-required="true" ng-maxLength="255"
+													ng-model="agency.desc" />
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_desc.$dirty && agency_form.agency_desc.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_desc.$dirty && agency_form.agency_desc.$error.required">
+													必填</div>
+											</div>
+										</div>
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 备注
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="agency_comment"
+													type="text" ng-required="true" ng-maxLength="255"
+													ng-model="agency.comment" />
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_comment.$dirty && agency_form.agency_comment.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_comment.$dirty && agency_form.agency_comment.$error.required">
+													必填</div>
+											</div>
+										</div>
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 邮编
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="agency_postCode"
+													type="text" ng-required="true" ng-maxLength="255"
+													ng-model="agency.postCode" />
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_postCode.$dirty && agency_form.agency_postCode.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_postCode.$dirty && agency_form.agency_postCode.$error.required">
+													必填</div>
+											</div>
+										</div>
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 地址
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="agency_address"
+													type="text" ng-required="true" ng-maxLength="255"
+													ng-model="agency.address" />
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_address.$dirty && agency_form.agency_address.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_address.$dirty && agency_form.agency_address.$error.required">
+													必填</div>
+											</div>
+										</div>
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 联系电话
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="agency_contactPhone"
+													type="text" ng-required="true" ng-maxLength="255"
+													ng-model="agency.contactPhone" />
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_contactPhone.$dirty && agency_form.agency_contactPhone.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_contactPhone.$dirty && agency_form.agency_contactPhone.$error.required">
+													必填</div>
+											</div>
+										</div>
+
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 联系人
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="agency_contactName"
+													type="text" ng-required="true" ng-maxLength="255"
+													ng-model="agency.contactName" />
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_contactName.$dirty && agency_form.agency_contactName.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_contactName.$dirty && agency_form.agency_contactName.$error.required">
+													必填</div>
+											</div>
+										</div>
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 传真
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="agency_fax" type="text"
+													ng-required="true" ng-maxLength="255" ng-model="agency.fax" />
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_fax.$dirty && agency_form.agency_fax.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_fax.$dirty && agency_form.agency_fax.$error.required">
+													必填</div>
+											</div>
+										</div>
+
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 邮箱
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="agency_email" type="text"
+													ng-required="true" ng-maxLength="255"
+													ng-model="agency.email" />
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_email.$dirty && agency_form.agency_email.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="agency_form.agency_email.$dirty && agency_form.agency_email.$error.required">
+													必填</div>
+											</div>
+										</div>
+
+										<div style="text-align: center; margin-top: 40px;">
+
+											<button
+												ng-class="{ 'btn btn-primary':!agency_form.$invalid,  'btn':agency_form.$invalid}"
+												type="submit" ng-disabled="agency_form.$invalid">提交</button>
+											<button class="btn btn-default" type="button"
+												ng-click="agency_form_reset()">重置</button>
+
+
+										</div>
+									</form>
+
+								</div>
+								<!-- <div class="tab-pane" id="tab_agency_impower" role="tabpanel">
+									<p>Duis ac enim diam</p>-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	</div>
+
+	<div class="widget">
+		<div class="widget-header">
+			<div class="title">角色维护</div>
+		</div>
+		<div class="widget-body">
+			<div class="example_alt_pagination" id="dt_example">
+				<div class="panel panel-transparent">
+					<!-- <div class="panel-title">角色维护</div> -->
+					<div class="panel-body">
+						<div role="tabpanel">
+							<!-- Nav tabs -->
+							<ul class=" nav nav-tabs" role="tablist">
+								<li class="active" role="presentation"><a
+									aria-controls="tab_role_list" aria-expanded="true"
+									class="mytab_role active" data-toggle="tab" href=""
+									role="tab"> 查询/更新 </a></li>
+								<li class="" role="presentation"><a
+									aria-controls="tab_role_add" aria-expanded="false"
+									class="mytab_role" data-toggle="tab" href="" role="tab">
+										添加 </a></li>
+								<li class="" role="presentation"><a
+									aria-controls="tab_role_impower" aria-expanded="false"
+									class="mytab_role" data-toggle="tab" href="" role="tab">
+										授权分配 </a></li>
+							</ul>
+							<!-- Tab panes -->
+							<div class="tab-content">
+								<div class="tab-pane active" id="tab_role_list"
+									role="tabpanel">
+									<table
+										class="table table-condensed table-striped table-hover  dataTable">
+										<thead>
+											<tr role="row">
+												<td colspan="4"><input placeholder="过滤角色信息"
+													class="search-query " name="query" type="text"
+													ng-model="search.search_role_filter"
+													ng-keyup="myRoleKeyup($event)"></td>
+											</tr>
+											<tr class="info" role="row">
+												<th ng-click="order_role('name')">角色名</th>
+												<th ng-click="order_role('comment')">备注</th>
+											    <th ng-click="order_role('groupNameR')">角色所在集团</th>												
+											    <th ng-click="order_role('agencyNameR')">角色所在机构</th>
+
+
+												<!--  <th ng-click="order_role('status')">状态</th>-->
+												<th></th>
+											</tr>
+										</thead>
+										<tbody
+											ng-repeat="data in role_datas  | orderBy:title_role:ndesc_role">
+											<tr>
+												<td ng-bind="data.name"></td>
+												<td ng-bind="data.comment"></td>	
+												<td ng-bind="data.groupNameR"></td>		
+												<td ng-bind="data.agencyNameR"></td>																																																												
+												<!--  <td ng-bind="data.status"></td>-->
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+									<div style="text-align: center;">
+										<p>总共{{page_role.totalCount}}条记录，第{{page_role.currentPage}}/{{page_role.totalPages}}页</p>
+										<button class="btn btn-primary"
+											ng-disabled="page_role.currentPage<=1"
+											ng-click="go_role(page_role.currentPage - 1)">上一页</button>
+										<button class="btn btn-primary"
+											ng-disabled="page_role.currentPage >= page_role.totalPages"
+											ng-click="go_role(page_role.currentPage + 1)">下一页</button>
+									</div>
+
+								</div>
+								<div class="tab-pane" id="tab_role_add" role="tabpanel">
+									<form class="form-horizontal" name="role_form"
+										ng-submit="save_role()">
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 角色名
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="role_name" type="text"
+													ng-required="true" ng-maxLength="255"
+													ng-model="role.name" />
+												<div class="alert-danger help-block"
+													ng-show="role_form.role_name.$dirty && role_form.role_name.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="role_form.role_name.$dirty && role_form.role_name.$error.required">
+													必填</div>
+											</div>
+										</div>
+					                    <div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 所属集团
+											</div>
+											<div class="col-xs-8">
+												<select name="group" class="form-control"
+													ng-model="role.group" ng-required="true" ng-options=" p.name for p in dict_group">
+													<!--  <option ng-repeat="a in dict_group"
+														value="{{a.id}},{{a.name}}">{{a.name}}</option>-->
+
+												</select>
+												<div class="alert-danger help-block"
+													ng-show="role_form.group.$dirty && role_form.group.$error.required">
+													必填</div>
+											</div>
+										</div>										
+	
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 所属机构
+											</div>
+											<div class="col-xs-8">
+												<select name="agency" class="form-control"
+													ng-model="role.agency" ng-required="true" ng-options=" p.name for p in role.group.agency">
+													<!--  <option ng-repeat="a in dict_agency"
+														value="{{a.id}},{{a.name}}">{{a.name}}</option>-->
+
+												</select>
+												<div class="alert-danger help-block"
+													ng-show="role_form.agency.$dirty && role_form.agency.$error.required">
+													必填</div>
+											</div>
+										</div>									
+
+
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 备注
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="role_comment"
+													type="text" ng-required="true" ng-maxLength="255"
+													ng-model="role.comment" />
+												<div class="alert-danger help-block"
+													ng-show="role_form.role_comment.$dirty && role_form.role_comment.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="role_form.role_comment.$dirty && role_form.role_comment.$error.required">
+													必填</div>
+											</div>
+										</div>
+
+	
+
+										<div style="text-align: center; margin-top: 40px;">
+
+											<button
+												ng-class="{ 'btn btn-primary':!role_form.$invalid,  'btn':role_form.$invalid}"
+												type="submit" ng-disabled="role_form.$invalid">提交</button>
+											<button class="btn btn-default" type="button"
+												ng-click="role_form_reset()">重置</button>
+
+
+										</div>
+									</form>
+
+								</div>
+								<div class="tab-pane" id="tab_role_impower" role="tabpanel">
+   									<table
+										class="table table-condensed table-striped table-hover  dataTable">
+										<thead>
+											<tr role="row">
+												<td colspan="4"><input placeholder="过滤角色名称"
+													class="search-query " name="query" type="text"
+													ng-model="search.search_role_name"
+													ng-keyup="myRrKeyup($event)"></td>
+											</tr>
+											<tr class="info" role="row">
+											
+												<th ng-click="order('resName')">资源名称</th>
+												<th ng-click="order('resComment')">资源备注</th>
+												<th ng-click="order('resUrl')">资源路径</th>
+												<th ng-click="order('rrStatus')">状态</th>
+											</tr>
+										</thead>
+										<tbody ng-repeat="data in rr_datas  | orderBy:title_rr:ndesc_rr">
+											<tr>
+												<td ng-bind="data.resName"></td>
+												<td ng-bind="data.resComment"></td>
+												<td ng-bind="data.resUrl"></td>
+												<td ng-click="switch_rr(data)">
+												<switch  name="enabled"  ng-model="data.rrStatus" on="On" off="Off"
+                                            class="green"></switch></td>
+											</tr>
+										</tbody>
+									</table>
+									
+								
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	</div>
+	<div class="widget">
+		<div class="widget-header">
+			<div class="title">资源维护</div>
+		</div>
+		<div class="widget-body">
+			<div class="example_alt_pagination" id="dt_example">
+				<div class="panel panel-transparent">
+					<!-- <div class="panel-title">资源维护</div> -->
+					<div class="panel-body">
+						<div role="tabpanel">
+							<!-- Nav tabs -->
+							<ul class=" nav nav-tabs" role="tablist">
+								<li class="active" role="presentation"><a
+									aria-controls="tab_res_list" aria-expanded="true"
+									class="mytab_res active" data-toggle="tab" href=""
+									role="tab"> 查询/更新 </a></li>
+								<li class="" role="presentation"><a
+									aria-controls="tab_res_add" aria-expanded="false"
+									class="mytab_res" data-toggle="tab" href="" role="tab">
+										添加 </a></li>
+								<!--  <li class="" role="presentation"><a
+									aria-controls="tab_res_impower" aria-expanded="false"
+									class="mytab_res" data-toggle="tab" href="" role="tab">
+										授权分配 </a></li>-->
+							</ul>
+							<!-- Tab panes -->
+							<div class="tab-content">
+								<div class="tab-pane active" id="tab_res_list"
+									role="tabpanel">
+									<table
+										class="table table-condensed table-striped table-hover  dataTable">
+										<thead>
+											<tr role="row">
+												<td colspan="4"><input placeholder="过滤资源信息"
+													class="search-query " name="query" type="text"
+													ng-model="search.search_res_filter"
+													ng-keyup="myResKeyup($event)"></td>
+											</tr>
+											<tr class="info" role="row">
+												<th ng-click="order_res('name')">资源名</th>
+											
+
+                                                <th ng-click="order_res('groupName')">集团名</th>	
+                                                <th ng-click="order_res('agencyName')">机构名</th>	
+                                                <th ng-click="order_res('departName')">科室名</th>	
+                                                <th ng-click="order_res('subsysName')">子系统名</th>	   
+												<th ng-click="order_res('resUrl')">资源路径</th>
+										        <th ng-click="order_res('comment')">备注</th>                                                                                             
+												<!-- <th ng-click="order_res('status')">状态</th> -->
+												<th></th>
+											</tr>
+										</thead>
+										<tbody
+											ng-repeat="data in res_datas  | orderBy:title_res:ndesc_res">
+											<tr>
+												<td ng-bind="data.name"></td>
+												<!--<td ng-bind="data.subsysPath"></td>-->
+
+												<td ng-bind="data.groupName"></td>	
+												<td ng-bind="data.agencyName"></td>	
+												<td ng-bind="data.departName"></td>	
+												<td ng-bind="data.subsysName"></td>	
+												<td ng-bind="data.resUrl"></td>
+												<td ng-bind="data.comment"></td>																																																																								
+												<!--  <td ng-bind="data.status"></td>-->
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+									<div style="text-align: center;">
+										<p>总共{{page_res.totalCount}}条记录，第{{page_res.currentPage}}/{{page_res.totalPages}}页</p>
+										<button class="btn btn-primary"
+											ng-disabled="page_res.currentPage<=1"
+											ng-click="go_res(page_res.currentPage - 1)">上一页</button>
+										<button class="btn btn-primary"
+											ng-disabled="page_res.currentPage >= page_res.totalPages"
+											ng-click="go_res(page_res.currentPage + 1)">下一页</button>
+									</div>
+
+								</div>
+								<div class="tab-pane" id="tab_res_add" role="tabpanel">
+									<form class="form-horizontal" name="res_form"
+										ng-submit="save_res()">
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 资源名
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="res_name" type="text"
+													ng-required="true" ng-maxLength="255"
+													ng-model="res.name" />
+												<div class="alert-danger help-block"
+													ng-show="res_form.res_name.$dirty && res_form.res_name.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="res_form.res_name.$dirty && res_form.res_name.$error.required">
+													必填</div>
+											</div>
+										</div>
+	
+										<!-- <div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 子系统
+											</div>
+											<div class="col-xs-8">
+												<select name="res_subsys" class="form-control"
+													ng-model="res.subsys" ng-required="true">
+													<option ng-repeat="a in dict_subsys"
+														value="{{a.id}},{{a.name}},{{a.path}}">{{a.name}}</option>
+
+												</select>
+												<div class="alert-danger help-block"
+													ng-show="res_form.res_subsys.$dirty && res_form.res_subsys.$error.required">
+													必填</div>
+											</div>
+										</div>-->
+
+
+
+					                    <div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 所属集团
+											</div>
+											<div class="col-xs-8">
+												<select name="group" class="form-control"
+													ng-model="res.group" ng-required="true" ng-options=" p.name for p in dict_group">
+													<!--  <option ng-repeat="a in dict_group"
+														value="{{a.id}},{{a.name}}">{{a.name}}</option>-->
+
+												</select>
+												<div class="alert-danger help-block"
+													ng-show="res_form.group.$dirty && res_form.group.$error.required">
+													必填</div>
+											</div>
+										</div>										
+	
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 所属机构
+											</div>
+											<div class="col-xs-8">
+												<select name="agency" class="form-control"
+													ng-model="res.agency" ng-required="true" ng-options=" p.name for p in res.group.agency">
+													<!--<option ng-repeat="a in dict_agency"
+														value="{{a.id}},{{a.name}}">{{a.name}}</option>-->
+
+												</select>
+												<div class="alert-danger help-block"
+													ng-show="res_form.agency.$dirty && res_form.agency.$error.required">
+													必填</div>
+											</div>
+										</div>
+										
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 科室
+											</div>
+											<div class="col-xs-8">
+												<select name="res_depart" class="form-control"
+													ng-model="res.depart" ng-required="true" ng-options=" p.name for p in res.agency.department">
+													<!--<option ng-repeat="a in dict_department"
+														value="{{a.id}},{{a.name}},{{a.code}}">{{a.name}}</option>-->
+
+												</select>
+												<div class="alert-danger help-block"
+													ng-show="res_form.res_depart.$dirty && res_form.res_depart.$error.required">
+													必填</div>
+											</div>
+										</div>										
+
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 子系统
+											</div>
+											<div class="col-xs-8">
+												<select name="res_subsys" class="form-control"
+													ng-model="res.subsys" ng-required="true">
+													
+													<option ng-repeat="a in dict_subsys"
+														value="{{a.id}},{{a.name}},{{a.path}}">{{a.name}}</option>
+
+												</select>
+												<div class="alert-danger help-block"
+													ng-show="res_form.res_subsys.$dirty && res_form.res_subsys.$error.required">
+													必填</div>
+											</div>
+										</div>
+
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 资源路径
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="res_url" type="text"
+													ng-required="true" ng-maxLength="255"
+													ng-model="res.res_url" />
+												<div class="alert-danger help-block"
+													ng-show="res_form.res_url.$dirty && res_form.res_url.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="res_form.res_url.$dirty && res_form.res_url.$error.required">
+													必填</div>
+											</div>
+										</div>
+
+
+										<div class="formItem">
+											<div class="col-xs-4">
+												<span class="dian1 dian1_2"></span> 备注
+											</div>
+											<div class="col-xs-8">
+												<input class="form-control" name="res_comment"
+													type="text" ng-required="true" ng-maxLength="255"
+													ng-model="res.comment" />
+												<div class="alert-danger help-block"
+													ng-show="res_form.res_comment.$dirty && res_form.res_comment.$error.maxlength">
+													长度不能超过255</div>
+												<div class="alert-danger help-block"
+													ng-show="res_form.res_comment.$dirty && res_form.res_comment.$error.required">
+													必填</div>
+											</div>
+										</div>
+
+	
+
+										<div style="text-align: center; margin-top: 40px;">
+
+											<button
+												ng-class="{ 'btn btn-primary':!res_form.$invalid,  'btn':res_form.$invalid}"
+												type="submit" ng-disabled="res_form.$invalid">提交</button>
+											<button class="btn btn-default" type="button"
+												ng-click="res_form_reset()">重置</button>
+
+
+										</div>
+									</form>
+
+								</div>
+								<div class="tab-pane" id="tab_res_impower" role="tabpanel">
+									<p>Duis ac enim diam</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	</div>
+
+
+
+
+</div>
+
