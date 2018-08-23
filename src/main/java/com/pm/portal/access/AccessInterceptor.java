@@ -25,6 +25,7 @@ import com.pm.portal.service.base.MhAdminService;
 @Service
 public class AccessInterceptor  extends HandlerInterceptorAdapter{
 	
+	//HHA
 	@Autowired
 	MhAdminService adminService;
 	
