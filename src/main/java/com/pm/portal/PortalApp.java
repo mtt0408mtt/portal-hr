@@ -27,7 +27,7 @@ import com.pm.portal.rabbitmq.product.SendService;
 //@EnableBinding(SendService.class)
 public class PortalApp extends SpringBootServletInitializer {
 	
-	//哈哈11
+	//哈哈22
 	@Bean
 	@LoadBalanced
 	public RestTemplate getRestTemplate() {
