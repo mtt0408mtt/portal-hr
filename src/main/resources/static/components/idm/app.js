@@ -18,7 +18,7 @@ var app =angular.module('pm', [
   var activitiModule = app;
    app.constant('AppConfig', {
         pageSize: 10,
-         PORTALIPHOST : 'http://localhost:8081',
+         PORTALIPHOST : 'http://localhost:8080',
          groupId:'',
          agencyId:'',
          departmentId:''
@@ -47,48 +47,48 @@ var app =angular.module('pm', [
         '$location','$window','$http',
     function($rootScope, $cookies,AppConfig,HttpService,$location,$window,$http) {
     	console.log(AppConfig.PORTALIPHOST)
-    	AppConfig.PORTALIPHOST='http://'+$location.host()+':8081'
+    	AppConfig.PORTALIPHOST='http://'+$location.host()+':8080'
     	console.log(AppConfig.PORTALIPHOST)
     	$rootScope.menu_flag=false
     	$rootScope.adminInPage={};
-        if( !$cookies.get("token")  ){
-           $window.location.href="/login/to_login";
-        }else{
-//            var cookieArea=$cookies.get("area").split("aa")
-//            AppConfig.groupId=cookieArea[0]
-//            AppConfig.agencyId=cookieArea[1]
-//            AppConfig.departmentId=cookieArea[2]
-            var tokenId=$cookies.get("token");
-
-			g_showLoading();
-            $http(
-					{
-						method : 'POST',
-						url : AppConfig.PORTALIPHOST+'/login/get_token',
-						params : {
-
-						}
-					})
-					.success(
-					function(result, status,
-							 headers, config) {
-						layer.closeAll();
-						if (result.code == 0) {
-							$rootScope.adminInPage=result.data;
-						} else {
-							layer.msg(result.msg);
-							$window.location.href="/login/to_login";
-
-						}
-					}).error(
-					function(data, status,
-							 headers, config) {
-						layer.closeAll();
-						layer.msg(status);
-					});	
-            
-            
-        }
+//        if( !$cookies.get("token")  ){
+//           $window.location.href="/login/to_login";
+//        }else{
+////            var cookieArea=$cookies.get("area").split("aa")
+////            AppConfig.groupId=cookieArea[0]
+////            AppConfig.agencyId=cookieArea[1]
+////            AppConfig.departmentId=cookieArea[2]
+//            var tokenId=$cookies.get("token");
+//
+//			g_showLoading();
+//            $http(
+//					{
+//						method : 'POST',
+//						url : AppConfig.PORTALIPHOST+'/login/get_token',
+//						params : {
+//
+//						}
+//					})
+//					.success(
+//					function(result, status,
+//							 headers, config) {
+//						layer.closeAll();
+//						if (result.code == 0) {
+//							$rootScope.adminInPage=result.data;
+//						} else {
+//							layer.msg(result.msg);
+//							$window.location.href="/login/to_login";
+//
+//						}
+//					}).error(
+//					function(data, status,
+//							 headers, config) {
+//						layer.closeAll();
+//						layer.msg(status);
+//					});	
+//            
+//            
+//        }
         
         
         // Needed for auto-height
