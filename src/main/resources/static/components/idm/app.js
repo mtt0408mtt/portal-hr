@@ -51,44 +51,44 @@ var app =angular.module('pm', [
     	console.log(AppConfig.PORTALIPHOST)
     	$rootScope.menu_flag=false
     	$rootScope.adminInPage={};
-//        if( !$cookies.get("token")  ){
-//           $window.location.href="/login/to_login";
-//        }else{
-////            var cookieArea=$cookies.get("area").split("aa")
-////            AppConfig.groupId=cookieArea[0]
-////            AppConfig.agencyId=cookieArea[1]
-////            AppConfig.departmentId=cookieArea[2]
-//            var tokenId=$cookies.get("token");
-//
-//			g_showLoading();
-//            $http(
-//					{
-//						method : 'POST',
-//						url : AppConfig.PORTALIPHOST+'/login/get_token',
-//						params : {
-//
-//						}
-//					})
-//					.success(
-//					function(result, status,
-//							 headers, config) {
-//						layer.closeAll();
-//						if (result.code == 0) {
-//							$rootScope.adminInPage=result.data;
-//						} else {
-//							layer.msg(result.msg);
-//							$window.location.href="/login/to_login";
-//
-//						}
-//					}).error(
-//					function(data, status,
-//							 headers, config) {
-//						layer.closeAll();
-//						layer.msg(status);
-//					});	
-//            
-//            
-//        }
+        if( !$cookies.get("token_hr")  ){
+           $window.location.href="/login/to_login";
+        }else{
+//            var cookieArea=$cookies.get("area").split("aa")
+//            AppConfig.groupId=cookieArea[0]
+//            AppConfig.agencyId=cookieArea[1]
+//            AppConfig.departmentId=cookieArea[2]
+            var tokenId=$cookies.get("token_hr");
+
+			g_showLoading();
+            $http(
+					{
+						method : 'POST',
+						url : AppConfig.PORTALIPHOST+'/login/get_token',
+						params : {
+
+						}
+					})
+					.success(
+					function(result, status,
+							 headers, config) {
+						layer.closeAll();
+						if (result.code == 0) {
+							$rootScope.adminInPage=result.data;
+						} else {
+							layer.msg(result.msg);
+							$window.location.href="/login/to_login";
+
+						}
+					}).error(
+					function(data, status,
+							 headers, config) {
+						layer.closeAll();
+						layer.msg(status);
+					});	
+            
+            
+        }
         
         
         // Needed for auto-height

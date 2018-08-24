@@ -32,14 +32,14 @@ angular.module('pm', [
     	console.log(AppConfig.PORTALIPHOST)
     	$scope.menu_flag=false
     	$scope.adminInPage={};
-        if( !$cookies.get("token")  ){
+        if( !$cookies.get("token_hr")  ){
            $window.location.href="/login/to_login";
         }else{
 //            var cookieArea=$cookies.get("area").split("aa")
 //            AppConfig.groupId=cookieArea[0]
 //            AppConfig.agencyId=cookieArea[1]
 //            AppConfig.departmentId=cookieArea[2]
-            var tokenId=$cookies.get("token");
+            var tokenId=$cookies.get("token_hr");
 
 			g_showLoading();
             $http(
