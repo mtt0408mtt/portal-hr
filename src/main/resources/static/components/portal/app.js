@@ -33,7 +33,7 @@ angular.module('pm', [
     	$scope.menu_flag=false
     	$scope.adminInPage={};
         if( !$cookies.get("token_hr")  ){
-           $window.location.href="/login/to_login";
+        //   $window.location.href="/login/to_login";
         }else{
 //            var cookieArea=$cookies.get("area").split("aa")
 //            AppConfig.groupId=cookieArea[0]
