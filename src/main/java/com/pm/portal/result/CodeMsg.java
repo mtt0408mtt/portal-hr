@@ -64,6 +64,10 @@ public class CodeMsg {
 	public static final CodeMsg IDM_OPT_PARAMS_ERROR=new CodeMsg(530004,"idm操作传参数错误");
 	
 	
+	
+	public static final CodeMsg MESSAGE01 = new CodeMsg(01,"idm添加用户发生错误");;
+	
+	
 	private CodeMsg( ) {
 	}
 			

@@ -48,9 +48,9 @@ import lombok.extern.slf4j.Slf4j;
 public class MhAdminService {
 	
 	
-	public static final String COOKI_NAME_TOKEN = "token";
+	public static final String COOKI_NAME_TOKEN = "token_hr";
 	
-	public static final String COOKI_AREA = "area";
+	public static final String COOKI_AREA = "area_hr";
 	
 
 	

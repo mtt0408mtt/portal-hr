@@ -24,6 +24,11 @@ public class IdmClient {
 		return result;
 	}
 
+	public void addUser(Map<String, Object> vars) {
+		idmDao.addUser(vars);
+		
+	}
+
 
 
 }

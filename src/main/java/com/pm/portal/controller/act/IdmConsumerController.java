@@ -24,17 +24,16 @@ import com.pm.portal.service.portal.PortalOptClient;
 @RestController
 @RequestMapping(value = "/idm")
 public class IdmConsumerController {
-	
+
 	@Autowired
 	private IdmClient idmClient;
-	
-	
+
 	@RequestMapping(value = "/get_users", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	//@AccessLimit(seconds=5, maxCount=5, needLogin=true)
-	public Object getUsers(HttpServletResponse response, HttpServletRequest request,MhAdmin admin) {
+	// @AccessLimit(seconds=5, maxCount=5, needLogin=true)
+	public Object getUsers(HttpServletResponse response, HttpServletRequest request, MhAdmin admin) {
 		try {
 			Map<String, Object> vars = new HashMap<String, Object>();
-			
+
 			vars.put("admin", admin);
 
 			Integer pageIndex = 1;
@@ -56,8 +55,8 @@ public class IdmConsumerController {
 					vars.put("filter", null);
 				}
 
-			} 
-			
+			}
+
 			if (null != request.getParameter("sort")) {
 				String sort = request.getParameter("sort");
 				if (!StringUtils.isEmpty(sort)) {
@@ -69,8 +68,7 @@ public class IdmConsumerController {
 			} else {
 				return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
 			}
-			
-			
+
 			for (Map.Entry<String, Object> entry : vars.entrySet()) {
 				System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 			}
@@ -83,6 +81,93 @@ public class IdmConsumerController {
 		Exception e) {
 			e.printStackTrace();
 			return Result.error(CodeMsg.REPROT_LIS_QUERY_ERROR);
+		}
+	}
+
+	// add_user
+
+	@RequestMapping(value = "/add_user", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	// @AccessLimit(seconds=5, maxCount=5, needLogin=true)
+	public Object addUser(HttpServletResponse response, HttpServletRequest request, MhAdmin admin) {
+		try {
+			Map<String, Object> vars = new HashMap<String, Object>();
+
+			vars.put("admin", admin);
+
+			if (null != request.getParameter("id")) {
+				String id = request.getParameter("id");
+				if (!StringUtils.isEmpty(id)) {
+					vars.put("id", id);
+				} else {
+					return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+				}
+
+			} else {
+				return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+
+			}
+
+			if (null != request.getParameter("email")) {
+				String email = request.getParameter("email");
+				if (!StringUtils.isEmpty(email)) {
+					vars.put("email", email);
+				} else {
+					return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+				}
+
+			} else {
+				return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+
+			}
+			if (null != request.getParameter("firstName")) {
+				String firstName = request.getParameter("firstName");
+				if (!StringUtils.isEmpty(firstName)) {
+					vars.put("firstName", firstName);
+				} else {
+					return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+				}
+
+			} else {
+				return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+
+			}
+			if (null != request.getParameter("lastName")) {
+				String lastName = request.getParameter("lastName");
+				if (!StringUtils.isEmpty(lastName)) {
+					vars.put("lastName", lastName);
+				} else {
+					return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+				}
+
+			} else {
+				return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+
+			}
+			if (null != request.getParameter("password")) {
+				String password = request.getParameter("password");
+				if (!StringUtils.isEmpty(password)) {
+					vars.put("password", password);
+				} else {
+					return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+				}
+
+			} else {
+				return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+
+			}
+
+			for (Map.Entry<String, Object> entry : vars.entrySet()) {
+				System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+			}
+			idmClient.addUser(vars);
+
+			return Result.ok();
+
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+			return Result.error(CodeMsg.MESSAGE01);
 		}
 	}
 
