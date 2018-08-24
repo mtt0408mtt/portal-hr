@@ -22,7 +22,7 @@
 
                     <div class="col-xs-12" ng-if="model.mode == 'create'">
                         <div class="form-group">
-                            <label class="control-label">{{'IDM.USER-MGMT.POPUP.CREATE-ID' | translate}}</label>
+                            <label class="control-label">{{'IDM.USER-MGMT.POPUP.CREATE-ID' | translate}}</label>{{model.user.id}}
                             <input name="idInput" type="text" class="form-control" auto-focus ng-model="model.user.id">
                         </div>
                     </div>
