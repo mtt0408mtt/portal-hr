@@ -173,7 +173,7 @@
 						        };
 
 								$scope.addUser = function() {
-									$scope.model.errorMessage = undefined;
+							
 									$scope.model.user = undefined;
 									$scope.model.mode = 'create';
 									_internalCreateModal(
@@ -192,7 +192,7 @@
 
 						            _internalCreateModal({
 						                scope: $scope,
-						                template: 'views/popup/idm-user-type-edit.html',
+						                template: 'view/popup/idm-user-type-edit.html',
 						                show: true
 						            }, $modal, $scope);
 
@@ -207,10 +207,9 @@
 						                $scope.model.user = selectedUsers[0];
 						            }
 
-						            $scope.model.errorMessage = undefined;
 						            _internalCreateModal({
 						                scope: $scope,
-						                template: 'views/popup/idm-user-create.html?version=' + new Date().getTime(),
+						                template: 'view/popup/idm-user-create.html?version=' + new Date().getTime(),
 						                show: true
 						            }, $modal, $scope);
 						        };
@@ -221,7 +220,7 @@
 
 						            _internalCreateModal({
 						                scope: $scope,
-						                template: 'views/popup/idm-user-password-change.html',
+						                template: 'view/popup/idm-user-password-change.html',
 						                show: true
 						            }, $modal, $scope);
 
@@ -255,16 +254,117 @@
 								 $scope.loadUsers();
 
 							} ]);
+	
+	
 	module
 			.controller(
 					'IdmCreateUserPopupController',
 					[
-							'$rootScope',
 							'$scope',
 							'$http',
-							function($rootScope, $scope, $http) {
+							'AppConfig',
+							function( $scope, $http,AppConfig) {
 								
 								
+						        if ($scope.model.user === null || $scope.model.user === undefined) {
+						            $scope.model.user = {};
+						        }
+						        
+						        $scope.createNewUser = function () {
+						        	//g_showLoading();
+						            if (!$scope.model.user.id) {
+						                return;
+						            }
+
+						            var model = $scope.model;
+						            
+						        	 $http(
+							   					{
+							   						method : 'POST',
+							   						url : AppConfig.PORTALIPHOST+'/idm/add_user',
+							   						params : {
+										                id: model.user.id,
+										                email: model.user.email,
+										                firstName: model.user.firstName,
+										                lastName: model.user.lastName,
+										                password: model.user.password
+							   						}
+							   					})
+							   					.success(
+							   					function(result, status,headers, config) {
+							   						layer.closeAll();
+							   						if (result.code == 0) {
+							  							layer.msg("添加成功");
+							  							$scope.$hide();	
+							  							
+							  							$scope.loadUsers();
+							   						} else {
+							   							layer.msg(result.msg);
+							   						}
+						
+
+							   					}).error(
+							   					function(data, status,
+							   							 headers, config) {
+
+							   						layer.closeAll();
+							   						layer.msg(status);
+
+							   					});
+						            
+			                         
+						            
+						            
+						            
+						        };
+
+						        $scope.editUserDetails = function() {
+						        	
+						            if (!$scope.model.user.id) {
+						                return;
+						            }
+
+						            var model = $scope.model;
+						            model.loading = true;
+
+						            var data = {
+						                id: model.user.id,
+						                email: model.user.email,
+						                firstName: model.user.firstName,
+						                lastName: model.user.lastName,
+						            };
+
+						            $http({method: 'PUT', url: ACTIVITI.CONFIG.contextRoot + '/app/rest/admin/users/' + $scope.model.user.id, data: data}).
+						                success(function (data, status, headers, config) {
+
+						                    $scope.loadUsers();
+
+						                    $scope.model.loading = false;
+						                    $scope.$hide();
+						                }).
+						                error(function (data, status, headers, config) {
+						                    $scope.model.loading = false;
+						                    if (data && data.message) {
+						                        $rootScope.addAlert(data.message, 'error');
+						                    } else {
+						                        $rootScope.addAlert('Error while updating user status', 'error');
+						                    }
+
+						                    if (status == 403) {
+						                        $scope.model.errorMessage = "Forbidden";
+						                    } else if (status == 409) {
+						                        $scope.model.errorMessage = "A user with that email address already exists";
+						                    } else {
+						                        $scope.$hide();
+						                    }
+						                });
+						        };
+
+						        $scope.cancel = function () {
+						            if (!$scope.model.loading) {
+						                $scope.$hide();
+						            }
+						        };
 								
 								
 								
