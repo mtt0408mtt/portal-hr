@@ -171,4 +171,81 @@ public class IdmConsumerController {
 		}
 	}
 
+	
+	// update_user
+	
+	@RequestMapping(value = "/update_user", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	// @AccessLimit(seconds=5, maxCount=5, needLogin=true)
+	public Object updateUser(HttpServletResponse response, HttpServletRequest request, MhAdmin admin) {
+		try {
+			Map<String, Object> vars = new HashMap<String, Object>();
+
+			vars.put("admin", admin);
+
+			if (null != request.getParameter("id_")) {
+				String id_ = request.getParameter("id_");
+				if (!StringUtils.isEmpty(id_)) {
+					vars.put("id_", id_);
+				} else {
+					return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+				}
+
+			} else {
+				return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+
+			}
+
+			if (null != request.getParameter("email_")) {
+				String email_ = request.getParameter("email_");
+				if (!StringUtils.isEmpty(email_)) {
+					vars.put("email_", email_);
+				} else {
+					return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+				}
+
+			} else {
+				return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+
+			}
+			if (null != request.getParameter("first_")) {
+				String first_ = request.getParameter("first_");
+				if (!StringUtils.isEmpty(first_)) {
+					vars.put("first_", first_);
+				} else {
+					return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+				}
+
+			} else {
+				return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+
+			}
+			if (null != request.getParameter("last_")) {
+				String last_ = request.getParameter("last_");
+				if (!StringUtils.isEmpty(last_)) {
+					vars.put("last_", last_);
+				} else {
+					return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+				}
+
+			} else {
+				return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+
+			}
+
+
+			for (Map.Entry<String, Object> entry : vars.entrySet()) {
+				System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+			}
+			idmClient.updateUser(vars);
+
+			return Result.ok();
+
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+			return Result.error(CodeMsg.MESSAGE01);
+		}
+	}
+	
 }

@@ -29,6 +29,11 @@ public class IdmClient {
 		
 	}
 
+	public void updateUser(Map<String, Object> vars) {
+		idmDao.updateUser(vars);
+		
+	}
+
 
 
 }
