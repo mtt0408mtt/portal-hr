@@ -3,6 +3,7 @@ package com.pm.portal.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,5 +27,13 @@ public interface IdmDao {
 	
 	@Update("update ACT_ID_USER set first_=#{first_},last_=#{last_}, email_ = #{email_} where id_ = #{id_}")
 	public void updateUser(Map<String, Object> vars);
+
+	@Update("<script>update ACT_ID_USER set pwd_=#{pwd_} where id_ in"
+			+" <foreach item='item' index='index' collection='users' open='(' separator=',' close=')'>" 
+			+" #{item}  </foreach> </script> ")
+	public void updateUserPassword(Map<String, Object> vars);
+
+	@Delete("<script>delete  from ACT_ID_USER where id_ =#{id_} </script>")
+	public void deleteUser(Map<String, Object> vars);
 
 }

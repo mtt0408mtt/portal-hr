@@ -34,6 +34,16 @@ public class IdmClient {
 		
 	}
 
+	public void updateUserPassword(Map<String, Object> vars) {
+		idmDao.updateUserPassword(vars);
+		
+	}
+
+	public void deleteUser(Map<String, Object> vars) {
+		idmDao.deleteUser(vars);
+		
+	}
+
 
 
 }

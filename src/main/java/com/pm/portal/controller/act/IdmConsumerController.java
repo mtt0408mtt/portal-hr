@@ -248,4 +248,94 @@ public class IdmConsumerController {
 		}
 	}
 	
+	//update_users_password
+	
+	
+	@RequestMapping(value = "/update_users_password", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	// @AccessLimit(seconds=5, maxCount=5, needLogin=true)
+	public Object updateUserPassword(HttpServletResponse response, HttpServletRequest request, MhAdmin admin) {
+		try {
+			Map<String, Object> vars = new HashMap<String, Object>();
+
+			vars.put("admin", admin);
+			
+			if (null != request.getParameterValues("users")) {
+				String[] users = request.getParameterValues("users");
+                vars.put("users", users);
+			} else {
+				Result.error(CodeMsg.LIS_PARAMS_ERROR);
+			}
+
+
+			if (null != request.getParameter("pwd_")) {
+				String pwd_ = request.getParameter("pwd_");
+				if (!StringUtils.isEmpty(pwd_)) {
+					vars.put("pwd_", pwd_);
+				} else {
+					return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+				}
+
+			} else {
+				return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+
+			}
+			
+
+
+			for (Map.Entry<String, Object> entry : vars.entrySet()) {
+				System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+			}
+			idmClient.updateUserPassword(vars);
+
+			return Result.ok();
+
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+			return Result.error(CodeMsg.MESSAGE01);
+		}
+	}
+	
+	//delete_user
+	
+	@RequestMapping(value = "/delete_user", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	// @AccessLimit(seconds=5, maxCount=5, needLogin=true)
+	public Object deleteUser(HttpServletResponse response, HttpServletRequest request, MhAdmin admin) {
+		try {
+			Map<String, Object> vars = new HashMap<String, Object>();
+
+			vars.put("admin", admin);
+			
+
+
+			if (null != request.getParameter("id_")) {
+				String id_ = request.getParameter("id_");
+				if (!StringUtils.isEmpty(id_)) {
+					vars.put("id_", id_);
+				} else {
+					return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+				}
+
+			} else {
+				return Result.error(CodeMsg.PORTAL_OPT_PARAMS_ERROR);
+
+			}
+			
+
+
+			for (Map.Entry<String, Object> entry : vars.entrySet()) {
+				System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+			}
+			idmClient.deleteUser(vars);
+
+			return Result.ok();
+
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+			return Result.error(CodeMsg.MESSAGE01);
+		}
+	}
 }
