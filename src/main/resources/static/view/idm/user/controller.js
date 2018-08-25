@@ -26,6 +26,7 @@
 									$translate,$timeout) {
 
 								$scope.model={
+									loading: false,
 									pendingFilterText:"",
 						            sorts: [
 						                    {id: 'id_ Asc', name: $translate.instant('IDM.USER-MGMT.FILTERS.SORT-ID-A')},
@@ -75,13 +76,14 @@
 						                $scope.model.selectedUsers[user.id_] = true;
 						                $scope.model.selectedUserCount +=1;
 						            }
+						            console.log( $scope.model.selectedUsers)
 
 						        };
 						        
 						        $scope.getSelectedUsers = function() {
 						            var selected = [];
-						            for(var i = 0; i<$scope.model.users.size; i++) {
-						                var user = $scope.model.users.data[i];
+						            for(var i = 0; i<$scope.model.users.length-1; i++) {
+						                var user = $scope.model.users[i];
 						                if(user) {
 						                    for(var prop in $scope.model.selectedUsers) {
 						                        if(user.id_ == prop) {
@@ -97,6 +99,7 @@
 						        
 						        $scope.loadUsers = function() {
 						        	$scope.clearSelectedUsers();
+						        	$scope.model.loading = true;
 						        	g_showLoading();
 						        	
 						        	 $http(
@@ -114,6 +117,7 @@
 						   					.success(
 						   					function(result, status,headers, config) {
 						   						layer.closeAll();
+						   						$scope.model.loading = false
 						   						if (result.code == 0) {
 						  							if(result.data.rows[0]){
 						 	    						$scope.model.users = result.data.rows;;
@@ -205,6 +209,7 @@
 						            var selectedUsers = $scope.getSelectedUsers();
 						            if (selectedUsers && selectedUsers.length == 1) {
 						                $scope.model.user = selectedUsers[0];
+						                console.log( $scope.model.user)
 						            }
 
 						            _internalCreateModal({
@@ -271,23 +276,23 @@
 						        }
 						        
 						        $scope.createNewUser = function () {
-						        	//g_showLoading();
-						            if (!$scope.model.user.id) {
+						        	
+						            if (!$scope.model.user.id_) {
 						                return;
 						            }
-
+						            g_showLoading();
 						            var model = $scope.model;
-						            
+						            model.loading = true;
 						        	 $http(
 							   					{
 							   						method : 'POST',
 							   						url : AppConfig.PORTALIPHOST+'/idm/add_user',
 							   						params : {
-										                id: model.user.id,
-										                email: model.user.email,
-										                firstName: model.user.firstName,
-										                lastName: model.user.lastName,
-										                password: model.user.password
+										                id: model.user.id_,
+										                email: model.user.email_,
+										                firstName: model.user.first_,
+										                lastName: model.user.last_,
+										                password: model.user.pwd_
 							   						}
 							   					})
 							   					.success(
@@ -320,12 +325,47 @@
 
 						        $scope.editUserDetails = function() {
 						        	
-						            if (!$scope.model.user.id) {
+						            if (!$scope.model.user.id_) {
 						                return;
 						            }
 
+						            g_showLoading();
 						            var model = $scope.model;
 						            model.loading = true;
+						        	 $http(
+							   					{
+							   						method : 'POST',
+							   						url : AppConfig.PORTALIPHOST+'/idm/update_user',
+							   						params : {
+										                id_: model.user.id_,
+										                email_: model.user.email_,
+										                first_: model.user.first_,
+										                last_: model.user.last_,
+										                pwd_: model.user.pwd_
+							   						}
+							   					})
+							   					.success(
+							   					function(result, status,headers, config) {
+							   						layer.closeAll();
+							   						if (result.code == 0) {
+							  							layer.msg("更新成功");
+							  							$scope.$hide();	
+							  							
+							  							$scope.loadUsers();
+							   						} else {
+							   							layer.msg(result.msg);
+							   						}
+						
+
+							   					}).error(
+							   					function(data, status,
+							   							 headers, config) {
+
+							   						layer.closeAll();
+							   						layer.msg(status);
+
+							   					});
+						            
 
 						            var data = {
 						                id: model.user.id,
@@ -334,31 +374,7 @@
 						                lastName: model.user.lastName,
 						            };
 
-						            $http({method: 'PUT', url: ACTIVITI.CONFIG.contextRoot + '/app/rest/admin/users/' + $scope.model.user.id, data: data}).
-						                success(function (data, status, headers, config) {
-
-						                    $scope.loadUsers();
-
-						                    $scope.model.loading = false;
-						                    $scope.$hide();
-						                }).
-						                error(function (data, status, headers, config) {
-						                    $scope.model.loading = false;
-						                    if (data && data.message) {
-						                        $rootScope.addAlert(data.message, 'error');
-						                    } else {
-						                        $rootScope.addAlert('Error while updating user status', 'error');
-						                    }
-
-						                    if (status == 403) {
-						                        $scope.model.errorMessage = "Forbidden";
-						                    } else if (status == 409) {
-						                        $scope.model.errorMessage = "A user with that email address already exists";
-						                    } else {
-						                        $scope.$hide();
-						                    }
-						                });
-						        };
+						   
 
 						        $scope.cancel = function () {
 						            if (!$scope.model.loading) {

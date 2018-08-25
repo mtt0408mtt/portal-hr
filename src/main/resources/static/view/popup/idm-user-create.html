@@ -22,8 +22,8 @@
 
                     <div class="col-xs-12" ng-if="model.mode == 'create'">
                         <div class="form-group">
-                            <label class="control-label">{{'IDM.USER-MGMT.POPUP.CREATE-ID' | translate}}</label>{{model.user.id}}
-                            <input name="idInput" type="text" class="form-control" auto-focus ng-model="model.user.id">
+                            <label class="control-label">{{'IDM.USER-MGMT.POPUP.CREATE-ID' | translate}}</label>{{model.user.id_}}
+                            <input name="idInput" type="text" class="form-control" auto-focus ng-model="model.user.id_">
                         </div>
                     </div>
                     <div class="col-xs-12">
@@ -32,25 +32,25 @@
                             <span style="color:white; background-color: red; padding: 0 5px 0 5px" ng-show="newUserForm.emailInput.$error.email">
                                 {{'IDM.USER-MGMT.POPUP.CREATE-INVALID-EMAIL' | translate}}
                             </span>
-                            <input name="emailInput" type="email" class="form-control" ng-model="model.user.email">
+                            <input name="emailInput" type="email" class="form-control" ng-model="model.user.email_">
                         </div>
                     </div>
                     <div class="col-xs-12" ng-if="model.mode == 'create'">
                         <div class="form-group">
                             <label class="control-label">{{'IDM.USER-MGMT.POPUP.CREATE-PASSWORD' | translate}}</label>
-                            <input type="password" class="form-control" ng-model="model.user.password">
+                            <input type="password" class="form-control" ng-model="model.user.pwd_">
                         </div>
                     </div>
                     <div class="col-xs-6">
                         <div class="form-group">
                             <label class="control-label">{{'IDM.USER-MGMT.POPUP.CREATE-FIRSTNAME' | translate}}</label>
-                            <input type="text" class="form-control" ng-model="model.user.firstName">
+                            <input type="text" class="form-control" ng-model="model.user.first_">
                         </div>
                     </div>
                     <div class="col-xs-6">
                         <div class="form-group">
                             <label class="control-label">{{'IDM.USER-MGMT.POPUP.CREATE-LASTNAME' | translate}}</label>
-                            <input type="text" class="form-control" ng-model="model.user.lastName">
+                            <input type="text" class="form-control" ng-model="model.user.last_">
                         </div>
                     </div>
 
@@ -68,13 +68,13 @@
                     <button ng-if="model.mode == 'create'"
                             type="button"
                             class="btn btn-primary"
-                            ng-disabled="model.loading || !model.user.id || !model.user.password || !model.user.firstName"
+                            ng-disabled="model.loading || !model.user.id_ || !model.user.pwd_ || !model.user.first_"
                             ng-click="createNewUser();">{{'IDM.GENERAL.ACTION.SAVE' | translate}}
                     </button>
                     <button ng-if="model.mode == 'edit'"
                             type="button"
                             class="btn btn-primary"
-                            ng-disabled="model.loading || !model.user.id || !model.user.lastName"
+                            ng-disabled="model.loading || !model.user.id_ || !model.user.last_"
                             ng-click="editUserDetails();">{{'IDM.GENERAL.ACTION.SAVE' | translate}}
                     </button>
                 </div>
