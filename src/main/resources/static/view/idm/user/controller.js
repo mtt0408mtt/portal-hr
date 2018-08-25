@@ -367,11 +367,6 @@
 							   					});
 						            
 
-						            var data = {
-						                id: model.user.id,
-						                email: model.user.email,
-						                firstName: model.user.firstName,
-						                lastName: model.user.lastName,
 						            };
 
 						   
