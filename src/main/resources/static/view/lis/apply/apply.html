@@ -1,0 +1,559 @@
+<style type="text/css">
+.focus{
+background-color:#cccccc
+}
+
+.odd{
+color:#0026ff
+}
+
+.even{
+color:#ff0000
+}
+
+
+
+
+</style>
+
+<div class="sub-nav hidden-sm hidden-xs">
+        <ul>
+            <li><a href="" class="heading">申请单</a>  
+                <!--  <button class="btn btn-success" ng-disabled="listen_disable==true" ng-click="connect()" >监听申请</button>
+                 <button class="btn btn-success" ng-disabled="listen_disable==false" ng-click="disconnect()" >取消监听</button>
+                 <button class="btn btn-success"  ng-click="send()" >发送消息</button>--> 
+            
+            </li>
+        </ul>
+    </div>
+<div class="dashboard-wrapper">
+
+    <div class="widget">
+         <form class="form-horizontal" name="apply_form" ng-submit="apply()">
+         <!-- <div class="widget-header">
+           <div class="title">
+               未通过
+            </div>
+              <span class="tools" style="color: #fff">
+              <i class="fa fa-plus"> 新增</i>&nbsp;&nbsp;
+              <i class="fa fa-cogs"> 修改</i>&nbsp;&nbsp;
+              <i class="fa fa-trash-alt"> 作废</i>
+            </span>
+        </div> -->
+        <div class="widget-body" style="padding-top: 7px">
+            <div class="items">
+                <span id="" class="itemClick" ng-click="newObj()"><i class="itemIcon fa fa-edit"></i>新增申请</span>
+                <span id="savebtn" class="itemClick" ng-click="addObj()"  ><i class="itemIcon fa fa-save" ></i>{{apply.sqid==""?'保存':'更新'}}</span>
+                <span id="btn1" class="itemClick" ng-click="updateStatus('1')" ><i class="itemIcon fa fa-check"></i>核对确认</span>
+                <span id="cancelbtn1" class="itemClick" ng-click="updateStatus('-1')"   ><i class="itemIcon fa fa-times"></i>取消确认</span>
+                <span id="btn2" class="itemClick" ng-click="updateStatus('2')"   ><i class="itemIcon fa fa-times"></i>作废申请</span>
+                <span id="cancelbtn2" class="itemClick" ng-click="updateStatus('-2')"  ><i class="itemIcon fa fa-reply " ></i>取消作废</span>
+                <span id="btn3" class="itemClick" ng-click="updateStatus('3')"  ><i class="itemIcon fa fa-arrow-right"></i>执行单据</span>
+                <span id="cancelbtn3" class="itemClick" ng-click="updateStatus('-3')"  ><i class="itemIcon fa fa-reply"></i>取消执行</span>
+                <span class="">
+                    <label>
+                        <input id="" type="checkbox" class="tree-checkbox" style="vertical-align: middle" ng-model="autodone">自动执行单据
+                    </label>
+                </span>
+                <span class="">
+                    <label>
+                        <input id="" type="checkbox" class="tree-checkbox" style="vertical-align: middle" ng-model="splitRule">使用本中心分管规则
+                    </label>
+                </span>
+                <span class="">
+                    <label>
+                        <input id="" type="checkbox" class="tree-checkbox" style="vertical-align: middle" ng-model="printCode">打印条码
+                    </label>
+                </span>
+            </div>
+            <hr class="hr1" />
+            <div id="inputDiv" >
+            <div class="inputs row">
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">申请单号</span>
+                    <span  name="sqid"  >{{apply.sqid}}</span>
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">送检单位</span>
+                    <select class="form-control" ng-model="apply.send_unit" ng-required="true" >
+                        <option ng-repeat="a in dict_send_unit" value="{{a.id}},{{a.name}}">{{a.name}}</option>
+
+                    </select>
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName" >物流条码</span>
+                    <input type="text" name="wltm" class="form-control"   ng-pattern="/^[0-9]*$/" ng-model="apply.wltm" />
+                    <div class="alert-danger help-block" ng-show="apply_form.wltm.$dirty && apply_form.wltm.$error.pattern">
+                                         必须数字
+                    </div>  
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">客户条码</span>
+                    <input type="text" name="" class="form-control" ng-model="apply.yntm" />
+                </div>
+
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">门诊/住院号</span>
+                    <input type="text" name="mzhm" class="form-control" ng-model="apply.mzhm" />
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">病人档案号</span>
+                    <input type="text" name="brid" class="form-control" ng-model="apply.brid" />
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">病人姓名</span>
+                    <input type="text" name="brxm" class="form-control" ng-model="apply.brxm" ng-required="true" />
+				 	<div class="alert-danger help-block"
+						ng-show="apply_form.brxm.$dirty && apply_form.brxm.$error.required">
+						必填</div>                    
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">病人类型</span>
+                     <select class="form-control" ng-model="hb.patient_type" style="width: 51%">
+                        <option ng-repeat="a in dict_patient_type" value="{{a.id}}">{{a.name}}</option>
+                    </select>
+   
+                   <label>
+                        <input id="yepb" ng-model="apply.yepb" name="yepb" type="checkbox"  style="vertical-align: middle;top: -2px;position: relative;height: 19px;width: 19px;margin: 0px">
+                        <span>婴儿</span>
+                    </label>
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">身份证号码</span>
+                    <input type="text" name="sfid" class="form-control" ng-model="apply.sfid" card />
+                    
+                   <div class="alert-danger help-block"
+						ng-show="apply_form.sfid.$dirty && apply_form.sfid.$error.card">
+						不正确</div>
+					<div class="alert-danger help-block"
+						ng-show="apply_form.sfid.$dirty && apply_form.sfid.$error.required">
+						必填</div>
+                    
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">性别</span>
+                    <select name="sex_type" class="form-control" ng-model="apply.sex_type" >
+                       <!--   <option value="">请选择</option>-->
+                        <option value="1">男</option>
+                        <option value="2">女</option>
+                        <option value="3">男变女</option>
+                        <option value="4">女变男</option>
+                        <option value="5">双性</option>
+                        <option value="6">未知</option>
+                    </select>
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">年龄</span>
+                    <input type="text" name="age" class="form-control" ng-model="apply.age" style="width: 51%" />
+
+                    <select class="form-control" style="width: 44px;height: 24px;margin: 0px;" ng-model="apply.age_unit" >
+
+                        <option value="岁">岁</option>
+                        <option value="月">月</option>
+                        <option value="天">天</option>
+                        <option value="时">时</option>
+                        <option value="分">分</option>
+                    </select>
+			  	<div class="alert-danger help-block"
+						ng-show="apply_form.age.$dirty && apply_form.age.$error.required">
+						必填</div>                   
+                    
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">出生年月</span>
+                    <input type="date" name="csrq" class="form-control" ng-model="apply.csrq"  />
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">申请模式</span>
+                     <select name="apply_type" class="form-control" ng-model="apply.apply_type" >
+                        <option ng-repeat="a in dict_apply_type" value="{{a.id}}">{{a.name}}</option>
+                    </select>
+                    
+                </div>
+               <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">样本类型</span>
+                     <select select2 ng-model="apply.sample_type" class="form-control" placeholder="{{apply.sample_type_name}}">
+	                      <option ng-repeat="a in dict_sample_type" value="{{a.id}}">{{a.name}},{{a.id}}</option>
+	                </select>  
+
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">样本性状</span>
+	                <select select2 ng-model="apply.sample_status" class="form-control" placeholder="{{apply.sample_status_name}}">
+	                      <option ng-repeat="a in dict_sample_status" value="{{a.id}}">{{a.name}},{{a.id}}</option>
+	                </select>           
+                </div> 
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">科室</span>
+                    <input type="text" name="sqks" class="form-control" ng-model="apply.sqks" />
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">病区</span>
+                    <input type="text" name="sqbq" class="form-control" ng-model="apply.sqbq" />
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">床号</span>
+                    <input type="text" name="bedNo" class="form-control" ng-model="apply.bedNo" />
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">申请医生</span>
+                    <input type="text" name="sqys" class="form-control"  ng-model="apply.sqys"/>
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">临床诊断</span>
+                    <input type="text" name="ynzd" class="form-control" ng-model="apply.ynzd" />
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">申请时间</span>
+                    <input type="date" name="sqsj" class="form-control"  ng-model="apply.sqsj" />
+
+                   <!-- <input type="text" name="sqsj" class="form-control" ng-model="apply.sqsj" readOnly="readonly"  id="nowSqdDate" /> -->
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">备注</span>
+                    <input name="comment" class="form-control" type="text" ng-model="apply.comment"/>
+                   
+                </div>
+                <div class="inputs_item col-lg-3 col-md-4">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">手机号码</span>
+                    <input name="cellphone" class="form-control" type="text" ng-model="apply.cellphone"/>
+                   
+                </div>   
+                 <div class="inputs_item col-lg-3 col-md-4" ng-show="apply.sqid!=''">
+                    <span class="dian1 dian1_2"></span>
+                    <span class="inputName">更新时间</span>
+                    <span name="update_date" class="form-control" ng-bind="apply.sqsj | date:'yyyy-MM-dd HH:mm:ss' " readOnly="readonly" /></span>
+                   
+                </div>                
+            </div>
+            <div class="title1">
+                <span ng-click="addGroup()" >添加组合&nbsp;<i class="fa fa-plus"></i></span>
+                <!--  <input id="select1" class="form-control toSelect" ng-keyup="autoComplete.start($event)" ng-focus="autoComplete.start($event)" ng-blur="clear()" placeholder="请输入a或b模拟效果" type="text" style="width: 600px;font-size:25%" />
+                <div class="auto_hidden" id="auto"></div>-->
+            </div>
+            <hr class="hr1" />
+            <div class="groups">
+                <span  class="itemClick" ng-repeat="comb in apply.zcombs" >{{comb.split(',')[1]}}<i class="itemClose fa fa-times" ng-click="removeZComb(comb)"></i></span>
+            </div>
+            </div>
+        </div>
+        </form>
+    </div>	
+    <div class="widget">
+        <!-- <div class="widget-header">
+            <div class="title">
+               已通过
+            </div>
+            <span class="tools" style="color: #fff">
+              <i class="fa fa-plus"> 新增</i>&nbsp;&nbsp;
+              <i class="fa fa-cogs"> 修改</i>&nbsp;&nbsp;
+              <i class="fa fa-trash-alt"> 作废</i>
+            </span> 
+        </div>-->
+        <div class="widget-body">
+            <div class="example_alt_pagination" id="dt_example">
+                <span class="dian1 dian1_2"></span>
+                申请时间
+                <input id="startDate"  ng-model="search.strDStart" class="form-control" type="date" name="" style="width: 130px">   至   <input ng-model="search.strDEnd" id="endDate" class="form-control" type="date" name="" style="width: 130px">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="dian1 dian1_2"></span>
+                送检机构 
+                <select class="form-control" ng-model="search.send_unit"  style="width: 120px;display: inline-block;" title="" ng-change="queryObj()">
+                    <option ng-repeat="a in dict_send_unit" value="{{a.id}},{{a.name}}">{{a.name}}</option>
+
+                </select>
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="dian1 dian1_2"></span>
+                状态 
+                <select class="form-control" style="width: 120px;display: inline-block;" title="" ng-model="search.apply_sqdzt" ng-change="queryObj()">
+                    <option value="999">所有</option>
+                    <option value="0">新增</option>
+                    <option value="1">确认</option>
+                    <option value="-1">取消确认</option>
+                    <option value="2">作废</option>
+                    <option value="-2">取消作废</option>
+                    <option value="3">执行</option>
+                    <option value="-3">取消执行</option>
+                    
+                    
+                </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+               
+                
+                <span id="" class="itemClick"  ng-click="queryObj()"><i class="itemIcon fas fa-search"></i>查询</span>
+                <span id="" class="itemClick" ng-click="reset()"><i class="itemIcon fas fa-times"></i>重置条件</span>
+                
+                
+                <!--   <input class="form-control" type="text" name="" style="float:right;width: 120px;display: inline-block;" ng-model="search.conditionValue" placeholder="请输入过滤条件" ng-keyup="queryApplyKeyup($event)">
+                 <select class="form-control" style="float:right;width: 120px;display: inline-block;" title="" ng-model="search.condition" >
+                    <option value="0">物流条码</option>
+                    <option value="1">客户条码</option>
+                    <option value="2">病人姓名</option>
+                    <option value="3">申请单号</option>
+                </select>-->
+                
+                <table class="table ">
+                    <thead >
+                        <tr class="info" role="row" >
+                            <th >
+                                序号
+                            </th >                        
+                            <th >
+                                申请单号
+                            </th >
+                            <th >
+                                状态
+                            </th>
+                            <th >
+                                病人姓名
+                            </th>
+                            <th >
+                                性别
+                            </th>
+                            <th >
+                                年龄
+                            </th>
+                            <th >
+                                样本类型
+                            </th>
+                            <th >
+                                物流条码
+                            </th>
+                            <th >
+                                客户条码
+                            </th>
+                            <th >
+                                登记者
+                            </th>
+                            <th >
+                                登记时间
+                            </th>
+                            <th >
+                                送检单位
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr ng-repeat="data in search.search_list"  ng-dblclick="getObj(data,$index)" ng-class='{focus:$index==focus}' >
+                             <td class="" ng-bind="$index+1" >
+                            </td>
+                            <td class="" ng-bind="data.sqid" >
+                            </td>
+                            <td class="" ng-bind="data.sqdztName">
+                            </td>
+                            <td class="" ng-bind="data.brxm">
+                            </td>
+                            <td class="" ng-bind="data.sexName">
+                            </td>
+                            <td class="" ng-bind="data.age">
+                            </td>
+                            <td class="" ng-bind="data.yblxName">
+                            </td>
+                            <td class="" ng-bind="data.wltm">
+                            </td>
+                            <td class="" ng-bind="data.yntm">
+                            </td>
+                            <td class="" ng-bind="data.sqrxm">
+                            </td>
+                            <td class="" ng-bind="data.sqsj | date:'yyyy-MM-dd HH:mm:ss'">
+                            </td>
+                            <td class="" ng-bind="data.sjdwmc">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+ 
+                 
+                 <span id="" class="itemClick" ng-show="search.apply_sqdzt==0 && search.search_list.length>0" ng-click="batchProcess(1)" ><i class="itemIcon fa fa-edit"></i> 批量确认</span>
+                 <span id="" class="itemClick" ng-show="search.apply_sqdzt==1 && search.search_list.length>0" ng-click="batchProcess(3)"><i class="itemIcon fa fa-edit"></i> 批量执行</span>
+              <!--   <div style="text-align: center;">
+                    <p>总共{{page.totalCount}}条记录，第{{page.currentPage}}/{{page.totalPages}}页</p>
+                    <button class="btn btn-primary" ng-disabled="page.currentPage<=1" ng-click="go(page.currentPage - 1)">上一页</button>
+                    <button class="btn btn-primary" ng-disabled="page.currentPage >= page.totalPages" ng-click="go(page.currentPage + 1)">下一页</button>
+                </div> -->
+            </div>
+            <div class="clearfix">
+            </div>
+        </div>
+    </div>
+
+</div>
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="alert1" role="dialog">
+    <form class="form-horizontal" name="add_form">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" class="close" data-dismiss="modal" ng-click="reset_comb()" type="button">
+                        ×
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        条目
+                    </h4>
+                               
+            <div class="groups"  >
+                <span ng-repeat="comb in apply.combs" class="itemClick"  style="fload:left">{{comb.split(',')[1]}}<i class="itemClose fa fa-times" ng-click="removeComb(comb)"></i></span>
+            </div>
+                </div>
+                <div class="modal-body">
+                    <div class="inputs row">
+                        <div class="inputs_item col-lg-7 col-md-7">
+                            <span class="dian1 dian1_2"></span>
+                            项目查找
+                            <select class="form-control" style="width: 100px" ng-model="apply.comb_condition">
+                                <option value="0">拼音码</option>
+                                <option value="1">五笔码</option>
+                                <option value="2">中文</option>
+                                <option value="3">组合ID</option>
+                            </select>
+                            <input type="text" name="comb_search_name" class="form-control" style="width: 150px" ng-model="search.comb_search_name" ng-keyup="myCombKeyup($event)" />
+                        </div>
+                        <div class="inputs_item col-lg-5 col-md-5">
+                            <span class="dian1 dian1_2"></span>
+                            项目分类
+
+                                
+                            <select class="form-control" ng-model="apply.comb_category" ng-change="change_category()" >
+                                <option  value="999">所有</option>
+                        		<option ng-repeat="a in dict_comb_category" value="{{a.id}}">{{a.name}}</option>
+                   			 </select>
+                        </div>
+                    </div>
+                     <table class="table table-condensed table-striped table-hover table-bordered pull-left dataTable">
+                        <thead >
+                            <tr class="info" role="row">
+                            
+                                <th>
+                                    组合ID
+                                </th>
+                                <th>
+                                    组合名称
+                                </th>
+                                <th>
+                                    拼音码
+                                </th>
+                                <th>
+                                    五笔码
+                                </th>
+                                <th>
+                                    类别名称
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat=" data in dict_combination">
+                            <tr ng-dblclick="addComb(data)">
+                                <td class="" ng-bind="data.zhid" >
+                                </td>
+                                <td class="" ng-bind="data.zhmc">
+                                </td>
+                                <td class="" ng-bind="data.pym">
+                                </td>
+                                <td class="" ng-bind="data.wbm">
+                                </td>
+                                <td class="" ng-bind="data.lbmc">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="text-align: center;">
+                        <p>总共{{page.totalCount}}条记录，第{{page.currentPage}}/{{page.totalPages}}页</p>
+                        <button class="btn btn-primary" ng-disabled="page.currentPage<=1" ng-click="go(page.currentPage - 1)">上一页</button>
+                        <button class="btn btn-primary" ng-disabled="page.currentPage >= page.totalPages" ng-click="go(page.currentPage + 1)">下一页</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" ng-click="reset_comb()" type="button">
+                        重置
+                    </button>
+                    <button class="btn btn-primary" ng-click="append()"  type="button">
+                        保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- 信息删除确认 -->  
+<div class="modal fade" id="confirmModel1">  
+  <div class="modal-dialog">  
+    <div class="modal-content message_align">  
+      <div class="modal-header">  
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>  
+        <h4 class="modal-title">提示信息</h4>  
+      </div>  
+      <div class="modal-body">  
+        <p>您确认要删除吗？</p>  
+      </div>  
+      <div class="modal-footer">  
+         <input type="hidden" id="url"/>  
+         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>  
+         <a  onclick="urlSubmit()" class="btn btn-success" data-dismiss="modal">确定</a>  
+      </div>  
+    </div><!-- /.modal-content -->  
+  </div><!-- /.modal-dialog -->  
+</div><!-- /.modal -->  
+
+<!-- 信息删除确认 -->  
+<div class="modal fade" id="confirmModel2">  
+  <div class="modal-dialog">  
+    <div class="modal-content message_align">  
+      <div class="modal-header">  
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>  
+        <h4 class="modal-title">提示信息</h4>  
+      </div>  
+      <div class="modal-body">  
+        <p>您确认要执行吗？</p>  
+      </div>  
+      <div class="modal-footer">  
+         <input type="hidden" id="url"/>  
+         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>  
+         <a  ng-click="urlSubmit()" class="btn btn-success" data-dismiss="modal">确定</a>  
+      </div>  
+    </div><!-- /.modal-content -->  
+  </div><!-- /.modal-dialog -->  
+</div><!-- /.modal -->
+<style>  
+.form-control {
+    width: 63%;
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

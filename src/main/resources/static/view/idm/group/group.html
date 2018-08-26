@@ -96,52 +96,35 @@
                     <!-- Users -->
                     <div class="section" style="min-height: 0">
 
-                     <!--   <h3 style="margin-bottom: 10px;">
-                            {{'IDM.FUNCTIONAL-GROUP-MGMT.MEMBERS' | translate}}
-                            <span class="action">
-                                 <a id="toggle-add-group-member"
-                                    select-people-popover
-                                    popover-title="IDM.FUNCTIONAL-GROUP-MGMT.ADD-POPOVER-TITLE"
-                                    placement="bottom"
-                                    on-people-selected="addGroupMember(user)"
-                                    email-mode-disabled="true"
-                                    tenant-id="common.selectedTenantId"
-                                    type="'idm'"
-                                    style="font-weight: normal">
-                                     {{'IDM.FUNCTIONAL-GROUP-MGMT.ADD-USER' | translate}}
-                                 </a>
-                            </span>
-                        </h3>-->
+                       <h3 style="margin-bottom: 10px;" ng-click="addShip()">
+                           	添加成员&nbsp;<i class="fa fa-plus"></i>
+                        </h3>
+
 
                         <div class="input-group user-search-field">
                         <span class="input-group-addon">
                             <i class="glyphicon glyphicon-search"></i>
                         </span>
-                            <input type="text" ng-model="model.userFilter" class="form-control"> <!--  ng-change="refreshDelayed()"-->
+                            <input type="text" ng-model="model.userFilter" class="form-control" placeholder="过滤下方列表成员"> <!--  ng-change="refreshDelayed()"-->
                         </div>
 
                         <span loading="model.loadingUsers"></span>
 
-                   <!--   <span ng-if="model.users && model.users.length > 0">
-                        {{'IDM.USER-MGMT.MATCHING-USERS' | translate:model.users}}
-    					<a ng-click="showPreviousUsers()" ng-show="model.userPage > 0">&laquo; {{'IDM.USER-MGMT.SHOW-PREVIOUS' | translate}} {{model.pageSize}}</a>
-						<span ng-show="model.userPage > 0 && model.moreUsers">|</span>
-						<a ng-click="showNextUsers()" ng-show="model.moreUsers">{{'IDM.USER-MGMT.SHOW-NEXT' | translate}} {{model.pageSize}} &raquo;</a>
-					</span>-->
+   
 					
 
 
                         <table width="100%" class="users" ng-if="model.users && model.users.length > 0">
                             <tr>
                                 <th width="30%">{{'IDM.USER-MGMT.ID' | translate}}</th>
-                                <th width="30%">{{'IDM.USER-MGMT.EMAIL' | translate}}</th>
+                                <th width="30%">{{'IDM.USEfR-MGMT.EMAIL' | translate}}</th>
                                 <th width="30%%">{{'IDM.USER-MGMT.NAME' | translate}}</th>
                                 <th width="10%"></th>
                             </tr>
                             <tr ng-repeat="user in model.users | filter:model.userFilter">
                                 <td>{{user.id_}}</td>
                                 <td>{{user.email_}}</td>
-                                <td>{{user.firstName_}} {{user.lastName_}}</td>
+                                <td>{{user.first_}}</td>
                                 <td align="center" ng-click="showRemoveMemberModal(user)"><i class="glyphicon glyphicon-trash" ></i></td>
                             </tr>
                         </table>
@@ -164,3 +147,6 @@
     </div>
 
 </div>
+
+
+

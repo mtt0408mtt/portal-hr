@@ -417,6 +417,7 @@
 						}
 					}).success(function(result, status, headers, config) {
 						layer.closeAll();
+						model.loading = false;
 						if (result.code == 0) {
 							//layer.msg("添加成功");
 							$scope.$hide();
@@ -456,6 +457,7 @@
 						}
 					}).success(function(result, status, headers, config) {
 						layer.closeAll();
+						model.loading = false;
 						if (result.code == 0) {
 							//layer.msg("更新成功");
 							$scope.$hide();

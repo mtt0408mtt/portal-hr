@@ -22,7 +22,7 @@
 
                     <div class="col-xs-12" ng-if="model.mode == 'create'">
                         <div class="form-group">
-                            <label class="control-label">{{'IDM.USER-MGMT.POPUP.CREATE-ID' | translate}}</label>{{model.user.id_}}
+                            <label class="control-label">{{'IDM.USER-MGMT.POPUP.CREATE-ID' | translate}}</label>
                             <input name="idInput" type="text" class="form-control" auto-focus ng-model="model.user.id_">
                         </div>
                     </div>
@@ -41,18 +41,18 @@
                             <input type="password" class="form-control" ng-model="model.user.pwd_">
                         </div>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-12">
                         <div class="form-group">
                             <label class="control-label">{{'IDM.USER-MGMT.POPUP.CREATE-FIRSTNAME' | translate}}</label>
                             <input type="text" class="form-control" ng-model="model.user.first_">
                         </div>
                     </div>
-                    <div class="col-xs-6">
+                  <!--    <div class="col-xs-6">
                         <div class="form-group">
                             <label class="control-label">{{'IDM.USER-MGMT.POPUP.CREATE-LASTNAME' | translate}}</label>
                             <input type="text" class="form-control" ng-model="model.user.last_">
                         </div>
-                    </div>
+                    </div>-->
 
                 </form>
 
@@ -74,7 +74,7 @@
                     <button ng-if="model.mode == 'edit'"
                             type="button"
                             class="btn btn-primary"
-                            ng-disabled="model.loading || !model.user.id_ || !model.user.last_"
+                            ng-disabled="model.loading || !model.user.id_ || !model.user.first_"
                             ng-click="editUserDetails();">{{'IDM.GENERAL.ACTION.SAVE' | translate}}
                     </button>
                 </div>
