@@ -61,12 +61,10 @@ public class CodeMsg {
 	public static final CodeMsg PORTAL_GROUP_ERROR = new CodeMsg(520215, "获取集团机构信息错误");
 	
 	//IDM操作
-	public static final CodeMsg IDM_OPT_PARAMS_ERROR=new CodeMsg(530004,"idm操作传参数错误");
-	
-	
-	
-	public static final CodeMsg MESSAGE01 = new CodeMsg(01,"idm添加用户发生错误");;
-	
+	public static final CodeMsg IDM_OPT_PARAMS_ERROR=new CodeMsg(00,"操作传参数错误");
+	public static final CodeMsg MESSAGE01 = new CodeMsg(01,"添加用户发生错误");
+	public static final CodeMsg MESSAGE02 = new CodeMsg(02,"组编号已经存在");
+	public static final CodeMsg MESSAGE03 = new CodeMsg(03,"用户编号已经存在");;
 	
 	private CodeMsg( ) {
 	}

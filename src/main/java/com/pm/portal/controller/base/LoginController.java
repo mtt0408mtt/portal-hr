@@ -68,21 +68,21 @@ public class LoginController {
 	
 	
 
-	@RequestMapping("/group")
-	@ResponseBody
-	public Object group(HttpServletResponse response) {
-		try {
-			
-			
-			List<MhGroup> group = adminService.group();
-			return JSONObject.toJSONString(Result.success(group));
-		} catch (
-
-		Exception e) {
-			e.printStackTrace();
-			return Result.error(CodeMsg.PORTAL_GROUP_ERROR);
-		}
-	}
+//	@RequestMapping("/group")
+//	@ResponseBody
+//	public Object group(HttpServletResponse response) {
+//		try {
+//			
+//			
+//			List<MhGroup> group = adminService.group();
+//			return JSONObject.toJSONString(Result.success(group));
+//		} catch (
+//
+//		Exception e) {
+//			e.printStackTrace();
+//			return Result.error(CodeMsg.PORTAL_GROUP_ERROR);
+//		}
+//	}
 	
 	
 	@RequestMapping("/get_subsys")

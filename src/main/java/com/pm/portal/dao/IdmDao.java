@@ -6,11 +6,11 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.pm.portal.domain.portal.MhAdmin;
+import com.pm.portal.domain.portal.MhGroup;
 
 @Mapper	
 public interface IdmDao {
@@ -35,5 +35,28 @@ public interface IdmDao {
 
 	@Delete("<script>delete  from ACT_ID_USER where id_ =#{id_} </script>")
 	public void deleteUser(Map<String, Object> vars);
+
+	@Select("select * FROM ACT_ID_GROUP")
+	public List<MhGroup> getGroups(Map<String, Object> vars);
+
+	@Select("select * FROM ACT_ID_GROUP where id_ = #{groupId}")
+	public MhGroup getGroup(Map<String, Object> vars);
+
+	@Select("select user.* from ACT_ID_MEMBERSHIP ship inner join ACT_ID_USER user ON ship.user_id_=user.id_ WHERE GROUP_ID_=#{groupId}")
+	public List<MhAdmin> getGroupUser(Map<String, Object> vars);
+
+	@Insert("insert into ACT_ID_GROUP(id_, name_) values(#{id_},#{name_})")
+	public void createGroup(Map<String, Object> vars);
+	@Select("select * FROM ACT_ID_USER where id_ = #{id_}")
+	public MhAdmin findUser(Map<String, Object> vars);
+
+	@Update("update ACT_ID_GROUP set name_=#{name_} where id_ = #{id_}")
+	public void updateGroup(Map<String, Object> vars);
+	
+	@Delete("<script>delete  from ACT_ID_GROUP where id_ =#{id_} </script>")
+	public void deleteGroup(Map<String, Object> vars);
+	
+	@Delete("<script>delete  from ACT_ID_MEMBERSHIP where group_id_ =#{id_} and  user_id_ =#{user_id_}</script>")
+	public void deleteGroupmember(Map<String, Object> vars);
 
 }

@@ -242,22 +242,22 @@ public class MhAdminService {
 
 
 
-	public List<MhGroup> group() {
-				
-		List<MhGroup> listGroup = adminDao.listGroup();
-		for(int i=0;i<listGroup.size();i++){
-			
-			List<MhAgency> listAgency = adminDao.listAgency(listGroup.get(i).getId());
-			listGroup.get(i).setAgency(listAgency);
-			for(int j=0;j<listAgency.size();j++){
-				List<MhDepartment> listDepartment = adminDao.listDepartment(listAgency.get(j).getId());
-				listAgency.get(j).setDepartment(listDepartment);
-			}
-		}
-		return listGroup;
-		
-		
-	}
+//	public List<MhGroup> group() {
+//				
+//		List<MhGroup> listGroup = adminDao.listGroup();
+//		for(int i=0;i<listGroup.size();i++){
+//			
+//			List<MhAgency> listAgency = adminDao.listAgency(listGroup.get(i).getId());
+//			listGroup.get(i).setAgency(listAgency);
+//			for(int j=0;j<listAgency.size();j++){
+//				List<MhDepartment> listDepartment = adminDao.listDepartment(listAgency.get(j).getId());
+//				listAgency.get(j).setDepartment(listDepartment);
+//			}
+//		}
+//		return listGroup;
+//		
+//		
+//	}
 	
 	private String getCookieValue(HttpServletRequest request, String cookiName) {
 		Cookie[]  cookies = request.getCookies();

@@ -8,16 +8,12 @@ import lombok.Data;
 
 @Data
 public class MhGroup {
-	private Long id;
+	private String id_;
+	private Integer rev_;
+	private String name_;
+	private String type_;
 	
-	private String name;
-	@JSONField(serialize=false)  
-	private String comment;
-	@JSONField(serialize=false)  
-	private String status;
-	
-	private String code;
-	private List<MhAgency> agency;
+	private List<MhAdmin> users;
 	
 
 }
