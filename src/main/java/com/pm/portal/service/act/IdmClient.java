@@ -84,11 +84,15 @@ public class IdmClient {
 
 	public void deleteGroup(Map<String, Object> vars) {
 		idmDao.deleteGroup(vars);
-		
+
 	}
 
 	public void deleteGroupmember(Map<String, Object> vars) {
 		idmDao.deleteGroupmember(vars);
+	}
+
+	public void add_members(Map<String, Object> vars) {
+		idmDao.add_members(vars);
 	}
 
 }
