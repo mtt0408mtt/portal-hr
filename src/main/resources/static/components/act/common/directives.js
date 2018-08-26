@@ -588,7 +588,7 @@ activitiModule.directive('ngDebounce', ['$timeout', function($timeout) {
 activitiModule.directive('externalContent', ['$parse', '$timeout', 'appResourceRoot', function ($parse, $timeout, appResourceRoot) {
     var directive = {};
     directive.restrict = 'A';
-    directive.templateUrl = appResourceRoot + '../views/common/templates/external-content-template.html';
+    directive.templateUrl =  '/view/common/templates/external-content-template.html';
 
     directive.scope = {
         taskId : '=taskId',
@@ -686,7 +686,7 @@ activitiModule.directive('externalContent', ['$parse', '$timeout', 'appResourceR
 
 
 activitiModule.
-    directive('selectPeoplePopover', ['$rootScope', '$http', '$popover', 'appResourceRoot', 'UserService', '$parse', function($rootScope, $http, $popover, appResourceRoot, UserService, $parse) {
+    directive('selectPeoplePopover', ['$rootScope', '$http', '$popover', 'UserService', '$parse', function($rootScope, $http, $popover, UserService, $parse) {
         var directive = {};
         directive.restrict = 'A';
 
@@ -718,11 +718,11 @@ activitiModule.
             }
 
             if ($scope.ignoreContainer) {
-                $scope.popover = $popover($element, {template: appResourceRoot + '../views/common/popover/select-people-popover.html?'  +
+                $scope.popover = $popover($element, {template:  '/view/common/popover/select-people-popover.html?'  +
                     Date.now(), placement: placement});
 
             } else {
-                $scope.popover = $popover($element, {template: appResourceRoot + '../views/common/popover/select-people-popover.html?'  +
+                $scope.popover = $popover($element, {template:  '/view/common/popover/select-people-popover.html?'  +
                     Date.now(), placement: placement, container: 'body'});
             }
 
@@ -953,11 +953,11 @@ directive('selectFunctionalGroupPopover', ['$rootScope', '$http', '$popover','ap
         }
 
         if ($scope.ignoreContainer) {
-            $scope.popover = $popover($element, {template: appResourceRoot + '../views/common/popover/select-functional-group-popover.html?' +
+            $scope.popover = $popover($element, {template:  '/view/common/popover/select-functional-group-popover.html?' +
                 Date.now(), placement: placement});
 
         } else {
-            $scope.popover = $popover($element, {template: appResourceRoot + '../views/common/popover/select-functional-group-popover.html?' +
+            $scope.popover = $popover($element, {template:  '/view/common/popover/select-functional-group-popover.html?' +
                 Date.now(), placement: placement, container: 'body'});
         }
 
