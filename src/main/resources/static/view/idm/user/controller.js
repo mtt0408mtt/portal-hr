@@ -125,7 +125,7 @@
 														+ '/idm/get_users',
 												params : {
 													sort : $scope.model.activeSort.id,
-													start : $scope.model.start,
+													//start : $scope.model.start,
 													pageSize : AppConfig.pageSize,
 													pageIndex : $scope.page.currentPage,
 													filter : $scope.model.pendingFilterText

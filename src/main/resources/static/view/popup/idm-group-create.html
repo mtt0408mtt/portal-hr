@@ -18,14 +18,14 @@
                 <div class="form-group" ng-if="model.mode == 'create'">
 
                     <label class="control-label">{{'IDM.FUNCTIONAL-GROUP-MGMT.POPUP.CREATE-ID' | translate}}</label>
-                    <input type="text" class="form-control" ng-model="model.editedGroup.id" auto-focus>
+                    <input type="text" class="form-control" ng-model="model.editedGroup.id_" auto-focus>
 
                 </div>
 
                 <div class="form-group">
 
                     <label class="control-label">{{'IDM.FUNCTIONAL-GROUP-MGMT.POPUP.CREATE-NAME' | translate}}</label>
-                    <input type="text" class="form-control" ng-model="model.editedGroup.name">
+                    <input type="text" class="form-control" ng-model="model.editedGroup.name_">
 
                 </div>
 
@@ -33,10 +33,10 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" ng-click="$hide()">{{'IDM.GENERAL.ACTION.CANCEL' | translate}}</button>
-                <button type="button" ng-if="model.mode == 'create'" class="btn btn-primary" ng-disabled="!model.editedGroup.id || !model.editedGroup.name || model.editedGroup.name.length == 0"
-                        ng-click="createGroup(); $hide()">{{'IDM.GENERAL.ACTION.SAVE' | translate}}</button>
-                <button type="button" ng-if="model.mode == 'edit'" class="btn btn-primary" ng-disabled="!model.editedGroup.id || !model.editedGroup.name || model.editedGroup.name.length == 0"
-                        ng-click="updateGroup(); $hide()">{{'IDM.GENERAL.ACTION.SAVE' | translate}}</button>
+                <button type="button" ng-if="model.mode == 'create'" class="btn btn-primary" ng-disabled="!model.editedGroup.id_ || !model.editedGroup.name_ || model.editedGroup.name_.length == 0"
+                        ng-click="createGroup();$hide(); ">{{'IDM.GENERAL.ACTION.SAVE' | translate}}</button>
+                <button type="button" ng-if="model.mode == 'edit'" class="btn btn-primary" ng-disabled="!model.editedGroup.id_ || !model.editedGroup.name_ || model.editedGroup.name_.length == 0"
+                        ng-click="updateGroup();$hide(); ">{{'IDM.GENERAL.ACTION.SAVE' | translate}}</button>
             </div>
 
         </div>
