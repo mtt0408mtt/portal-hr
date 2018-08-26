@@ -15,17 +15,17 @@ import com.pm.portal.domain.portal.MhGroup;
 @Mapper	
 public interface IdmDao {
 	
-	@Select("<script>select * from ACT_ID_USER where 1=1 <if test='filter!=null'> and upper(first_) like '%${filter}%'</if> order by ${sort} limit ${startIndex},${pageSize}</script>")
+	@Select("<script>select * from ACT_ID_USER where 1=1 <if test='filter!=null'> and upper(first_) like '%${filter}%'</if> <if test='sort!=null'> order by ${sort} </if> limit ${startIndex},${pageSize}</script>")
 	public List<MhAdmin> getUsers(Map<String, Object> vars);
 
-	@Select("<script>select count(1) from ACT_ID_USER where 1=1 <if test='filter!=null'> and upper(concat(first_,last_)) like '%${filter}%'</if> </script>")
+	@Select("<script>select count(1) from ACT_ID_USER where 1=1 <if test='filter!=null'> and upper(first_) like '%${filter}%'</if> </script>")
 	public long countUsers(Map<String, Object> vars);
 
 	
-	@Insert("insert into ACT_ID_USER(id_, first_, last_, email_,pwd_)values(#{id},#{firstName},#{lastName},#{email},#{password})")
+	@Insert("insert into ACT_ID_USER(id_, first_, email_,pwd_)values(#{id},#{firstName},#{email},#{password})")
 	public void addUser(Map<String, Object> vars);
 	
-	@Update("update ACT_ID_USER set first_=#{first_},last_=#{last_}, email_ = #{email_} where id_ = #{id_}")
+	@Update("update ACT_ID_USER set first_=#{first_}, email_ = #{email_} where id_ = #{id_}")
 	public void updateUser(Map<String, Object> vars);
 
 	@Update("<script>update ACT_ID_USER set pwd_=#{pwd_} where id_ in"
@@ -58,5 +58,10 @@ public interface IdmDao {
 	
 	@Delete("<script>delete  from ACT_ID_MEMBERSHIP where group_id_ =#{id_} and  user_id_ =#{user_id_}</script>")
 	public void deleteGroupmember(Map<String, Object> vars);
+
+	@Insert("<script> insert into ACT_ID_MEMBERSHIP(user_id_, group_id_) select id_ ,#{id_} from ACT_ID_USER  where id_ in  "
+			+" <foreach item='item' index='index' collection='members' open='(' separator=',' close=')'>" 
+			+" #{item}  </foreach> </script> ")
+	public void add_members(Map<String, Object> vars);
 
 }
