@@ -76,7 +76,7 @@
              "CREATE-EMAIL": "邮箱",
              "CREATE-INVALID-EMAIL": "无效",
              "CREATE-PASSWORD": "密码",
-             "CREATE-FIRSTNAME": "姓",
+             "CREATE-FIRSTNAME": "姓名",
              "CREATE-LASTNAME": "名",
              "CREATE-TENANT": "Tenant",
              "CREATE-COMPANY": "公司",
