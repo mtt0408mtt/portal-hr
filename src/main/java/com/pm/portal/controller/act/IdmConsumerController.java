@@ -1,5 +1,6 @@
 package com.pm.portal.controller.act;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,9 +67,7 @@ public class IdmConsumerController {
 					vars.put("sort", null);
 				}
 
-			} else {
-				return Result.error(CodeMsg.IDM_OPT_PARAMS_ERROR);
-			}
+			} 
 
 			for (Map.Entry<String, Object> entry : vars.entrySet()) {
 				System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
@@ -132,18 +131,18 @@ public class IdmConsumerController {
 				return Result.error(CodeMsg.IDM_OPT_PARAMS_ERROR);
 
 			}
-			if (null != request.getParameter("lastName")) {
-				String lastName = request.getParameter("lastName");
-				if (!StringUtils.isEmpty(lastName)) {
-					vars.put("lastName", lastName);
-				} else {
-					return Result.error(CodeMsg.IDM_OPT_PARAMS_ERROR);
-				}
-
-			} else {
-				return Result.error(CodeMsg.IDM_OPT_PARAMS_ERROR);
-
-			}
+//			if (null != request.getParameter("lastName")) {
+//				String lastName = request.getParameter("lastName");
+//				if (!StringUtils.isEmpty(lastName)) {
+//					vars.put("lastName", lastName);
+//				} else {
+//					return Result.error(CodeMsg.IDM_OPT_PARAMS_ERROR);
+//				}
+//
+//			} else {
+//				return Result.error(CodeMsg.IDM_OPT_PARAMS_ERROR);
+//
+//			}
 			if (null != request.getParameter("password")) {
 				String password = request.getParameter("password");
 				if (!StringUtils.isEmpty(password)) {
@@ -218,18 +217,18 @@ public class IdmConsumerController {
 				return Result.error(CodeMsg.IDM_OPT_PARAMS_ERROR);
 
 			}
-			if (null != request.getParameter("last_")) {
-				String last_ = request.getParameter("last_");
-				if (!StringUtils.isEmpty(last_)) {
-					vars.put("last_", last_);
-				} else {
-					return Result.error(CodeMsg.IDM_OPT_PARAMS_ERROR);
-				}
-
-			} else {
-				return Result.error(CodeMsg.IDM_OPT_PARAMS_ERROR);
-
-			}
+//			if (null != request.getParameter("last_")) {
+//				String last_ = request.getParameter("last_");
+//				if (!StringUtils.isEmpty(last_)) {
+//					vars.put("last_", last_);
+//				} else {
+//					return Result.error(CodeMsg.IDM_OPT_PARAMS_ERROR);
+//				}
+//
+//			} else {
+//				return Result.error(CodeMsg.IDM_OPT_PARAMS_ERROR);
+//
+//			}
 
 			for (Map.Entry<String, Object> entry : vars.entrySet()) {
 				System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
@@ -587,5 +586,60 @@ public class IdmConsumerController {
 		}
 
 	}
+	
+	//add_members
+	@RequestMapping(value = "/add_members", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	// @AccessLimit(seconds=5, maxCount=5, needLogin=true)
+	public Object addMembers(HttpServletResponse response, HttpServletRequest request, MhAdmin admin) {
+		try {
+			Map<String, Object> vars = new HashMap<String, Object>();
+
+			vars.put("admin", admin);
+			
+			if (null != request.getParameterValues("members")) {
+				String[] members = request.getParameterValues("members");
+				List<String> ms=new ArrayList<String>();
+				for(int i=0;i<members.length;i++){
+					String[] split = members[i].split(",");
+					ms.add(split[0]);
+				}
+				
+		        vars.put("members", ms);
+			} else {
+				Result.error(CodeMsg.IDM_OPT_PARAMS_ERROR);
+			}
+			
+			if (null != request.getParameter("id_")) {
+				String id_ = request.getParameter("id_");
+				if (!StringUtils.isEmpty(id_)) {
+					vars.put("id_", id_);
+				} else {
+					return Result.error(CodeMsg.IDM_OPT_PARAMS_ERROR);
+				}
+			}else{
+				
+				 return Result.error(CodeMsg.IDM_OPT_PARAMS_ERROR);
+			}
+			
+			
+			
+			for (Map.Entry<String, Object> entry : vars.entrySet()) {
+				System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+			}
+			 idmClient.add_members(vars);
+			 return Result.ok();
+
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+			return Result.error(CodeMsg.SERVER_ERROR);
+		}
+
+	}
+	
+	
+	
+
 
 }
