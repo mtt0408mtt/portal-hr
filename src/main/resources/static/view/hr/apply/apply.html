@@ -1,0 +1,615 @@
+<style type="text/css">
+.focus {
+	background-color: #cccccc
+}
+
+.odd {
+	color: #0026ff
+}
+
+.even {
+	color: #ff0000
+}
+</style>
+
+<div class="sub-nav hidden-sm hidden-xs">
+	<ul>
+		<li><a href="" class="heading">员工信息</a></li>
+	</ul>
+</div>
+<div class="dashboard-wrapper">
+
+	<div class="widget">
+		<form class="form-horizontal" name="add_form" ng-submit="apply()">
+			<div class="widget-body" style="padding-top: 7px">
+				<div class="items">
+					<span id="" class="itemClick" ng-click="newObj()"><i
+						class="itemIcon fa fa-edit"></i>新增员工</span> <span id="savebtn"
+						class="itemClick" ng-click="addObj()" type="submit" ng-disabled="add_form.$invalid"><i
+						class="itemIcon fa fa-save"></i>保存</span> <span id="btn1"
+						class="itemClick" ng-click="updateStatus('1')"><i
+						class="itemIcon fa fa-check"></i>确认</span> <span id="cancelbtn1"
+						class="itemClick" ng-click="updateStatus('-1')"><i
+						class="itemIcon fa fa-times"></i>取消确认</span> <span id="btn2"
+						class="itemClick" ng-click="updateStatus('2')"><i
+						class="itemIcon fa fa-times"></i>作废申请</span> <span id="cancelbtn2"
+						class="itemClick" ng-click="updateStatus('-2')"><i
+						class="itemIcon fa fa-reply "></i>取消作废</span>
+
+				</div>
+				<hr class="hr1" />
+				<div id="inputDiv">
+					员工资料
+					<div class="inputs row">
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">姓名</span>
+							<input type="text" name="name" class="form-control"
+								ng-model="add.name" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">工号</span>
+							<input type="text" name="number" class="form-control"
+								ng-model="add.number" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">厂区</span>
+							<select class="form-control" ng-model="add.agency"
+								ng-required="true">
+								<option ng-repeat="a in dict_agency" value="{{a.id}},{{a.name}}">{{a.name}}</option>
+							</select>
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">部门</span>
+							<select class="form-control" ng-model="add.department"
+								ng-required="true">
+								<option ng-repeat="a in dict_department"
+									value="{{a.id}},{{a.name}}">{{a.name}}</option>
+							</select>
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">性别</span>
+							<select name="sex" class="form-control" ng-model="add.sex">
+								<option value="1">男</option>
+								<option value="2">女</option>
+							</select>
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">岗位</span>
+							<select class="form-control" ng-model="add.duty"
+								ng-required="true">
+								<option ng-repeat="a in dict_duty" value="{{a.id}},{{a.name}}">{{a.name}}</option>
+							</select>
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">岗位级别</span>
+							<select name="" class="form-control" ng-model="add.level">
+								<option value="1">总经理</option>
+								<option value="2">经理</option>
+								<option value="3">主管</option>
+								<option value="3">总监</option>
+								<option value="3">员工</option>
+							</select>
+						</div>
+
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">手机号码</span>
+							<input type="text" name="mobile" class="form-control"
+								ng-model="add.mobile" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">电话</span>
+							<input type="text" name="telphone" class="form-control"
+								ng-model="add.telphone" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">邮件</span>
+							<input type="text" name="email" class="form-control"
+								ng-model="add.email" />
+						</div>
+
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">合同状态</span>
+							<select name="contractStatus" class="form-control"
+								ng-model="add.contractStatus">
+								<option value="1">已生效</option>
+								<option value="2">未生效</option>
+								<option value="3">已失效</option>
+							</select>
+						</div>
+					</div>
+
+				</div>
+				<hr class="hr1" />
+				<div id="inputDiv">
+					其他信息
+					<div class="inputs row">
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">身份证号码</span>
+							<input ng-required="true" type="text" name="sfid" class="form-control" ng-model="add.sfid" card />
+
+							<div class="alert-danger help-block"
+								ng-show="add_form.sfid.$dirty && add_form.sfid.$error.required">
+								必填</div>
+								
+							<div class="alert-danger help-block" ng-show="add_form.sfid.$dirty && add_form.sfid.$error.card">
+						                 不正确</div>	
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">年龄</span>
+							<input type="text" name="age" class="form-control"
+								ng-model="add.age" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">出生年月</span>
+							<input type="date" name="birthday" class="form-control"
+								id="birthday" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">婚姻状况</span>
+							<select name="" class="form-control" ng-model="add.marriage">
+								<option value="1">单身</option>
+								<option value="2">已婚</option>
+								<option value="3">离婚</option>
+							</select>
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">入职日期</span>
+							<input type="date" name="onbound" class="form-control"
+								id="onbound" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">上岗日期</span>
+							<input type="date" name="onbound" class="form-control"
+								id="onbound" />
+						</div>
+
+					</div>
+
+				</div>
+				<hr class="hr1" />
+				<div id="inputDiv">
+					人事合同
+					<div class="inputs row">
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">记录编号</span>
+							<input type="text" name="contractId" class="form-control"
+								ng-model="add.contractId" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">合同类型</span>
+							<select name="contractStatus" class="form-control"
+								ng-model="add.contractStatus">
+								<option value="1">合同期</option>
+								<option value="2">试用期</option>
+								<option value="3">已离职</option>
+							</select>
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">合同编号</span>
+							<input type="text" name="contractNum" class="form-control"
+								ng-model="add.contractNum" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">签订日期</span>
+							<input type="date" name="contractDate" class="form-control"
+								id="contractDate" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">合同开始日期</span>
+							<input type="date" name="contractStartDate" class="form-control"
+								id="contractStartDate" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">合同结束日期</span>
+							<input type="date" name="contractEndDate" class="form-control"
+								id="contractEndDate" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">终止日期</span>
+							<input type="date" name="contractDownDate" class="form-control"
+								id="contractDownDate" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">合同年限</span>
+							<input type="text" name="contractYear" class="form-control"
+								ng-model="add.contractYear" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">终止原因</span>
+							<input type="text" name="contractDownReason" class="form-control"
+								ng-model="add.contractDownReason" />
+						</div>
+
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">户籍类型</span>
+							<input type="text" name="householdType" class="form-control"
+								ng-model="add.householdType" />
+						</div>
+						<div class="inputs_item col-lg-3 col-md-4">
+							<span class="dian1 dian1_2"></span> <span class="inputName">备注信息</span>
+							<input type="text" name="comment" class="form-control"
+								ng-model="add.comment" />
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="title1">
+					<span ng-click="doChange()">调岗调职&nbsp;<i class="fa fa-plus"></i></span>
+					<!--  <input id="select1" class="form-control toSelect" ng-keyup="autoComplete.start($event)" ng-focus="autoComplete.start($event)" ng-blur="clear()" placeholder="请输入a或b模拟效果" type="text" style="width: 600px;font-size:25%" />
+                <div class="auto_hidden" id="auto"></div>-->
+				</div>
+				<hr class="hr1" />
+				<div class="groups">
+					<span class="itemClick" ng-repeat="item in changes"
+						title="异动类型:{{item.type}}">{{item.date | date:'yy-MM-dd'}}
+						{{item.department}} {{item.duty}}</span>
+
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+	<div class="widget">
+
+		<div class="widget-body">
+			<div class="example_alt_pagination" id="dt_example">
+				<span class="dian1 dian1_2"></span> 查询时间 <input id="startDate"
+					class="form-control" type="date" name="" style="width: 130px">
+				至 <input id="endDate" class="form-control" type="date" name=""
+					style="width: 130px"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+				<span class="dian1 dian1_2"></span> 所属厂区 <select
+					class="form-control" ng-model="search.agency"
+					style="width: 120px; display: inline-block;" ng-required="true">
+					<option value="999">所有</option>
+					<option ng-repeat="a in dict_agency" value="{{a.id}},{{a.name}}">{{a.name}}</option>
+				</select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="dian1 dian1_2"></span>
+				所属部门 <select class="form-control" ng-model="search.department"
+					style="width: 120px; display: inline-block;" ng-required="true">
+					<option value="999">所有</option>
+					<option ng-repeat="a in dict_department"
+						value="{{a.id}},{{a.name}}">{{a.name}}</option>
+				</select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="dian1 dian1_2"></span>状态
+
+				<select class="form-control"
+					style="width: 120px; display: inline-block;" title=""
+					ng-model="search.status"  ng-init="search.status='0'" ng-change="queryObj3()">
+					<option value="999">所有</option>
+					<option value="0">新增</option>
+					<option value="1">确认</option>
+					<option value="-1">取消确认</option>
+					<option value="2">作废申请</option>
+					<option value="-2">取消作废</option>
+				</select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="dian1 dian1_2"></span>合同状态
+
+				<select class="form-control"
+					style="width: 120px; display: inline-block;" title=""
+					ng-model="search.contractStatus" ng-init="search.contractStatus='999'" ng-change="queryObj3()">
+					<option value="999">所有</option>
+					<option value="1">合同期</option>
+					<option value="2">试用期</option>
+					<option value="3">已离职</option>
+				</select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select class="form-control"
+					style="width: 120px; display: inline-block;" title=""
+					ng-model="search.condition">
+					<option value="0">员工姓名</option>
+					<option value="1">工号</option>
+					<option value="2">手机号码</option>
+					<option value="3">身份证号码</option>
+				</select> <input class="form-control" type="text" name=""
+					style="width: 120px; display: inline-block;"
+					ng-model="search.conditionValue" placeholder="请输入过滤条件"> <span
+					id="" class="itemClick" ng-click="queryObj2()"><i
+					class="itemIcon fas fa-search"></i>查询</span> <span id="" class="itemClick"
+					ng-click="reset()"><i class="itemIcon fas fa-times"></i>重置条件</span>
+				<table class="table ">
+					<thead>
+						<tr class="info" role="row">
+							<th>姓名</th>
+							<th>工号</th>
+							<th>性别</th>
+							<th>年龄</th>
+							<th>岗位</th>
+							<th>岗位级别</th>
+							<th>手机号码</th>
+							<th>登记者</th>
+							<th>登记时间</th>
+							<th>送检单位</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="data in search.search_list"
+							ng-dblclick="getObj(data,$index)"
+							ng-class='{focus:$index==focus}'>
+							<td class="" ng-bind="data.sqid"></td>
+							<td class="" ng-bind="data.sqdzt"></td>
+							<td class="" ng-bind="data.brxm"></td>
+							<td class="" ng-bind="data.sex"></td>
+							<td class="" ng-bind="data.age"></td>
+							<td class="" ng-bind="data.yblx"></td>
+							<td class="" ng-bind="data.wltm"></td>
+							<td class="" ng-bind="data.yntm"></td>
+							<td class="" ng-bind="data.sqrxm"></td>
+							<td class="" ng-bind="data.sqsj | date:'yyyy-MM-dd HH:mm:ss'">
+							</td>
+							<td class="" ng-bind="data.sjdwmc"></td>
+						</tr>
+					</tbody>
+				</table>
+
+
+
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+<div aria-hidden="true" aria-labelledby="myModalLabel"
+	class="modal fade" id="alert1" role="dialog">
+	<form class="form-horizontal" name="change_form">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button aria-hidden="true" class="close" data-dismiss="modal"
+						ng-click="reset_change()" type="button">×</button>
+					<h4 class="modal-title" id="myModalLabel"></h4>
+
+					<!--  <div class="groups">
+						<span ng-repeat="item in changes" class="itemClick"
+							title="异动类型:{{item.type}}" style="fload: left"><i class="itemClose fa fa-times"
+							ng-click="removeChange(item)"></i>
+						</span>
+					</div>-->
+				</div>
+				<div class="widget">
+					<div class="widget-header">
+						<div class="title">调岗调职</div>
+					</div>
+					<div class="widget-body">
+						<div class="example_alt_pagination" id="dt_example">
+							<div class="panel panel-transparent">
+								<div class="panel-title">信息</div>
+								<div class="panel-body">
+									<div role="tabpanel">
+										<!-- Nav tabs -->
+										<ul class="nav nav-tabs" role="tablist">
+											<li class="active" role="presentation"><a
+												class="mytab_change active" aria-controls="change_list"
+												aria-expanded="true" data-toggle="tab" href="" role="tab">
+													日志 </a></li>
+											<li role="presentation"><a class="mytab_change"
+												aria-controls="change_add" aria-expanded="false"
+												data-toggle="tab" href="" role="tab"> 添加 </a></li>
+											<!-- <li class="" role="presentation"><a
+												aria-controls="messages" aria-expanded="false" class=""
+												data-toggle="tab" href="" role="tab"> Messages </a></li> -->
+										</ul>
+										<!-- Tab panes -->
+										<div class="tab-content ">
+											<div class="tab-pane active" id="change_list" role="tabpanel">
+												<table class="table ">
+													<thead>
+														<tr class="info" role="row">
+															<th>异动日期</th>
+															<th>异动类型</th>
+															<th>厂区</th>
+															<th>部门</th>
+															<th>岗位</th>
+															<th>岗位级别</th>
+															<th>原厂区</th>
+															<th>原部门</th>
+															<th>原岗位</th>
+															<th>原岗位级别</th>
+															<th>操作</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>2017-06-30</td>
+															<td>升职</td>
+															<td>厂区1</td>
+															<td>部门1</td>
+															<td>主管</td>
+															<td>主管</td>
+															<td>厂区1</td>
+															<td>部门1</td>
+															<td>领班</td>
+															<td>员工</td>
+															<td><button class="btn btn-default">删除</button></td>
+														</tr>
+														<tr>
+															<td>2018-06-30</td>
+															<td>调动</td>
+															<td>厂区1</td>
+															<td>部门1</td>
+															<td>主管</td>
+															<td>主管</td>
+															<td>厂区2</td>
+															<td>部门2</td>
+															<td>主管</td>
+															<td>主管</td>
+															<td><button class="btn btn-default">删除</button></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="tab-pane" id="change_add" role="tabpanel">
+												<div class="formItem">
+													<div class="col-xs-4">
+														<span class="dian1 dian1_2"></span> 异动日期
+													</div>
+													<div class="col-xs-8">
+														<input type="date" name="changeDate" class="form-control"
+															id="changeDate" ng-model="change.date" />
+													</div>
+												</div>
+												<div class="formItem">
+													<div class="col-xs-4">
+														<span class="dian1 dian1_2"></span> 异动类型
+													</div>
+													<div class="col-xs-8">
+														<select name="" class="form-control"
+															ng-model="change.type">
+															<option value="1">调动</option>
+															<option value="2">升职</option>
+														</select>
+													</div>
+												</div>
+
+												<div class="formItem">
+													<div class="col-xs-4">
+														<span class="dian1 dian1_2"></span> 厂区
+													</div>
+													<div class="col-xs-8">
+														<select class="form-control" ng-model="change.agency"
+															ng-required="true">
+															<option ng-repeat="a in dict_agency"
+																value="{{a.id}},{{a.name}}">{{a.name}}</option>
+														</select>
+													</div>
+												</div>
+												<div class="formItem">
+													<div class="col-xs-4">
+														<span class="dian1 dian1_2"></span> 部门
+													</div>
+													<div class="col-xs-8">
+														<select class="form-control" ng-model="change.department"
+															ng-required="true">
+															<option ng-repeat="a in dict_department"
+																value="{{a.id}},{{a.name}}">{{a.name}}</option>
+														</select>
+													</div>
+												</div>
+												<div class="formItem">
+													<div class="col-xs-4">
+														<span class="dian1 dian1_2"></span> 岗位
+													</div>
+													<div class="col-xs-8">
+														<select class="form-control" ng-model="change.duty"
+															ng-required="true">
+															<option ng-repeat="a in dict_duty"
+																value="{{a.id}},{{a.name}}">{{a.name}}</option>
+														</select>
+													</div>
+												</div>
+												<div class="formItem">
+													<div class="col-xs-4">
+														<span class="dian1 dian1_2"></span> 岗位级别
+													</div>
+													<div class="col-xs-8">
+														<select name="" class="form-control"
+															ng-model="change.level">
+															<option value="1">总经理</option>
+															<option value="2">经理</option>
+															<option value="3">主管</option>
+															<option value="3">总监</option>
+															<option value="3">员工</option>
+														</select>
+													</div>
+												</div>
+												<div class="formItem">
+													<div class="col-xs-4">
+														<span class="dian1 dian1_2"></span> 原厂区
+													</div>
+													<div class="col-xs-8">
+														<select class="form-control" ng-model="change.agency_old"
+															ng-required="true">
+															<option ng-repeat="a in dict_agency"
+																value="{{a.id}},{{a.name}}">{{a.name}}</option>
+														</select>
+													</div>
+												</div>
+												<div class="formItem">
+													<div class="col-xs-4">
+														<span class="dian1 dian1_2"></span> 原部门
+													</div>
+													<div class="col-xs-8">
+														<select class="form-control"
+															ng-model="change.department_old" ng-required="true">
+															<option ng-repeat="a in dict_department"
+																value="{{a.id}},{{a.name}}">{{a.name}}</option>
+														</select>
+													</div>
+												</div>
+												<div class="formItem">
+													<div class="col-xs-4">
+														<span class="dian1 dian1_2"></span> 原岗位
+													</div>
+													<div class="col-xs-8">
+														<select class="form-control" ng-model="change.duty_old"
+															ng-required="true">
+															<option ng-repeat="a in dict_duty"
+																value="{{a.id}},{{a.name}}">{{a.name}}</option>
+														</select>
+													</div>
+												</div>
+												<div class="formItem">
+													<div class="col-xs-4">
+														<span class="dian1 dian1_2"></span> 原岗位级别
+													</div>
+													<div class="col-xs-8">
+														<select name="" class="form-control"
+															ng-model="change.level_old">
+															<option value="1">总经理</option>
+															<option value="2">经理</option>
+															<option value="3">主管</option>
+															<option value="3">总监</option>
+															<option value="3">员工</option>
+														</select>
+													</div>
+												</div>
+
+												<div style="text-align: center; margin-top: 40px;">
+													<button
+														ng-class="{ 'btn btn-primary':!change_form.$invalid,  'btn':change_form.$invalid}"
+														type="submit" ng-disabled="change_form.$invalid">提交</button>
+													<button class="btn btn-default" type="button"
+														ng-click="change_form_reset()">重置</button>
+
+												</div>
+
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+
+
+
+
+
+
+			</div>
+		</div>
+	</form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
